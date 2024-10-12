@@ -1,0 +1,8 @@
+1> For send Email we used Gmail service 
+steps for used Gmail for email sending 
+1>> Create Account on Gmail if not example ---> rescuenet.Org.gmail.com
+2>> Active 2 factor Authentication 
+3>> tab on  menu icon manage Google Account 
+4>> Now search on App Password(inside a secutity) click on then login again
+5>> Add Name of Application and its generate a password which called a less secure password 
+6>> after this make nodemailer tranporter object 
