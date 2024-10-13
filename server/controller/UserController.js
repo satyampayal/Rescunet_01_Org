@@ -331,4 +331,8 @@ const verifyResetPassword = async (req, res) => {
   }
 };
 
+const complainRegister=async (req,res)=>{
+  const {}=req.body;
+}
+
 export { register, userVerify, login, resetPassword, verifyResetPassword };
