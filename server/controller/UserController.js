@@ -332,7 +332,24 @@ const verifyResetPassword = async (req, res) => {
 };
 
 const complainRegister=async (req,res)=>{
-  const {}=req.body;
+  const {}=req.body
+}
+const getAllComplain=async (req,res)=>{
+  try{
+    //  const response=await Complains.find({});
+    //  res.json({
+    //   status:"Success",
+    //   Message:"Get All Complaints",
+    //   complains:response
+    //  })
+
+  }catch(error){
+    console.log(error)
+    res.jsn({
+      status:"Failed",
+      message:"Get All Complaint error in Request"
+    })
+  }
 }
 
 export { register, userVerify, login, resetPassword, verifyResetPassword };
