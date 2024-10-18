@@ -5,7 +5,7 @@ const complainSchema=new Schema({
         type:String,
         require:true,
     },
-    fatcherName:{
+    fatherName:{
         type:String,
         require:true,
     },
@@ -94,7 +94,7 @@ const complainSchema=new Schema({
          type:String,
         require:true,
     },
-    maentalHealth:{
+    meantalHealth:{
          type:String,
         require:true,
     },
@@ -120,16 +120,10 @@ const complainSchema=new Schema({
     apparentCauseofLeaving:{
         type:String,  
    },
-   dreesatTimeOfLeaving:{
+   dreesAtTimeOfLeaving:{
     type:String,  
     },
-    month:{
-        type:String,  
-    },
-    year:{
-        type:Number,
-    },
-    email:{
+    otherEmail:{
         type:String,
     },
 })
