@@ -33,6 +33,7 @@ const complainRegister=async (req,res)=>{
         otherEmail,
     }=req.body
 
+
   }
   const getAllComplain=async (req,res)=>{
     try{
@@ -51,3 +52,5 @@ const complainRegister=async (req,res)=>{
       })
     }
   }
+
+  export {complainRegister};
