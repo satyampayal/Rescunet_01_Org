@@ -1,9 +1,13 @@
 import mongoose, { Schema } from "mongoose";
 
 const complainSchema=new Schema({
-    name:{
+    firstName:{
         type:String,
         require:true,
+    },
+    lastName:{
+        type:String,
+      
     },
     fatherName:{
         type:String,
@@ -39,8 +43,14 @@ const complainSchema=new Schema({
     },
     images:[
         {
-            type:String,
+            public_id: {
+                type: String,
+            },
+            secure_url: {
+                type: String,
+            }
         }
+       
     ],
     languageKnown:{
         type:String,
@@ -76,6 +86,7 @@ const complainSchema=new Schema({
     },
     hairColor:{
          type:String,
+         require:true,
       
     },
     built:{
@@ -101,6 +112,7 @@ const complainSchema=new Schema({
     reportFill:{
         type:Boolean,
         default:false,
+        require:true
     },
     reportNo:{
          type:String,    
