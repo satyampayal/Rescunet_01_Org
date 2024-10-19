@@ -1,6 +1,10 @@
 import { Router } from "express";
-import { complainRegister } from "../controller/complain.controller";
+import { complainRegister } from "../controller/complain.controller.js";
+import upload from '../middleware/multer.middleware.js'
+const complainRoute=Router();
 
-const route=Router();
+complainRoute.post('/register',upload.single('images'),complainRegister)
 
-route.post('/register',complainRegister)
+
+export default complainRoute;
+

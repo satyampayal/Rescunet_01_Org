@@ -1,4 +1,5 @@
-
+import cloudinary  from 'cloudinary'
+import fs from 'fs/promises'
 const complainRegister=async (req,res)=>{
     const {name,
         fatherName,
@@ -32,6 +33,28 @@ const complainRegister=async (req,res)=>{
         dreesAtTimeOfLeaving,
         otherEmail,
     }=req.body
+
+    if(req.file){
+      try {
+        const result=await cloudinary.v2.uploader.upload(req.file.path,{
+          folder:'MissingPersonImages',
+          gravity:'faces',
+        })
+        fs.rm(`uploads/${result.original_filename}`)
+        console.log(result)
+        return res.json({
+          status:true,
+          message:"Complain Register Successfully",
+    
+        })
+        
+      } catch (error) {
+        console.log(error)
+      }
+   
+
+    }
+   
 
 
   }
