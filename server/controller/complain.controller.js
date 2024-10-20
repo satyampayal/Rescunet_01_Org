@@ -104,11 +104,12 @@ const complainRegister = async (req, res) => {
         folder: "MissingPersonImages",
         gravity: "faces",
       });
-      complian.images.push({
+      console.log(result)
+       complian.images={
         public_id:result.public_id,
         secure_url:result.secure_url,
-      })
-      fs.rm(`uploads/${result.original_filename}`);
+      }
+      // fs.rm(`uploads/${result.original_filename}`);
      
     } catch (error) {
       console.log(error);

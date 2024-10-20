@@ -22,7 +22,7 @@ const complainSchema=new Schema({
         require:true,
     },
     missingSince:{
-        type:Date,
+        type:String,
         require:true,
     },
     nearPoliceStationName:{
@@ -120,8 +120,8 @@ const complainSchema=new Schema({
     stationName:{
         type:String,  
    },
-   dateAndTime:{
-    type:Date,  
+   StringAndTime:{
+    type:String,  
     },
     gdeNo:{
         type:String,  
