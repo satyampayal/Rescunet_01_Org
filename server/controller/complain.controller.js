@@ -98,18 +98,23 @@ const complainRegister = async (req, res) => {
     otherEmail,
   });
 
-  if (req.file) {
+  if (req.files) {
     try {
-      const result = await cloudinary.v2.uploader.upload(req.file.path, {
-        folder: "MissingPersonImages",
-        gravity: "faces",
-      });
-      console.log(result)
-       complian.images={
-        public_id:result.public_id,
-        secure_url:result.secure_url,
+      for(const file of req.files){
+        const result = await cloudinary.v2.uploader.upload(file.path, {
+          folder: "MissingPersonImages",
+          gravity: "faces",
+        });
+        complian.images.push({
+          public_id:result.public_id,
+          secure_url:result.secure_url,
+        })
+        fs.rm(file.path);
       }
-      // fs.rm(`uploads/${result.original_filename}`);
+    
+    
+     
+
      
     } catch (error) {
       console.log(error);
