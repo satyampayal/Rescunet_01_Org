@@ -206,6 +206,7 @@ const login = async (req, res) => {
       if (checkPassword) {
         if (result.verified) {
           const token = await result.generateToken();
+          res.cookie("token",token)
           return res.json({
             status: "success",
             message: "Successfully Logeed in account ",

@@ -38,7 +38,7 @@ UserSchema.methods={
         return await bcrypt.compare(plainPassword,this.password)
     },
     generateToken:async function(){
-      return await  jwt.sign({id:this._id,email:this.email},"dyucjscjshc",{
+      return await  jwt.sign({id:this._id,email:this.email},process.env.JWT_SECRET,{
         //null
       })
 

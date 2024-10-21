@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const complainSchema=new Schema({
+    postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     firstName:{
         type:String,
         require:true,
