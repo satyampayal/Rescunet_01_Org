@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import { config } from "dotenv";
+config()
 
 const connectedToDb=async ()=>{
-
 try {
-   await mongoose.connect("mongodb://localhost:27017/react-project-8-oct")
+   await mongoose.connect(process.env.MONGODB_URI)
    console.log("Connected")
     
 } catch (error) {
