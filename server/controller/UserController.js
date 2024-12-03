@@ -7,31 +7,79 @@ import bcrypt from "bcryptjs";
 import { v4 } from "uuid";
 import sendEmail from "../utils/sendEmail.js";
 
+const emailSend=(id,email)=>{
+  const currenturl = "http://localhost:3000/";
+  const uniqueString = v4() + id;
+  const subject = "Verify Your Email";
+  const body = `<p>Verify your Email address to complete the signup and login into your account.</p><p>This is link <b>experies in 6 hours </b></p><p>Press <a href=${
+    currenturl + "user/verify/" + id + "/" + uniqueString
+  } >here</a> to proceed.</p>`;
+  bcrypt
+  .hash(uniqueString, 10)
+  .then((hashedUniqueString) => {
+    const newUserVerification = new UserVerification({
+      userId: id,
+      uniqueString: hashedUniqueString,
+      createdAt: Date.now(),
+      expiresAt: Date.now() + 21600000,
+    });
+    newUserVerification
+      .save()
+      .then(() => {
+        sendEmail(email, subject, body)
+          .then(() => {
+            return {
+              status: "Pending",
+              message: "Email verification sent ",
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            return {
+              status: "failed",
+              message: "could'nt send email ",
+            }
+          });
+      })})
+  
+}
 const register = async (req, res) => {
   const { firstName, lastName, email, password, dob } = req.body;
   if (firstName == "" || email == "" || password == "" || dob == "") {
-    res.json({
+   return  res.json({
       status: "Failed",
       message: "Empty input filed!",
     });
   } else if (!/^[a-zA-Z]*$/.test(firstName)) {
-    res.json({
+   return  res.json({
       status: "Failed",
       message: "Invalid  Name Enterd ",
     });
   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-    res.json({
+    return  res.json({
       status: "Failed",
       message: "Invalid Email Enterd  ",
     });
   }
   try {
     const userExists = await User.findOne({ email });
-    if (userExists) {
-      res.json({
+    if (userExists) {// one thing more i have to done if user alredy register then you should send emil verfication sent again if its is not verfied till
+      if(!userExists.verified){
+          // send email 
+         emailSend(userExists._id,email)
+          
+          
+          return res.json({
+            status:"pending",
+            message:"email sent succesfully"
+          })
+          
+         }
+         else {
+          return  res.json({
         status: "failed",
-        message: "User email alredy register ",
-      });
+        message: "User email alredy register  ",
+            });}
     }
     const user = await User.create({
       firstName,
@@ -47,6 +95,7 @@ const register = async (req, res) => {
         message: "registertion fail",
       });
     }
+
     // now send a email verfication
     const currenturl = "http://localhost:3000/";
     const uniqueString = v4() + user._id;
@@ -96,7 +145,14 @@ const register = async (req, res) => {
           message: "An Error occured while hashing email detail",
         });
       });
-  } catch (err) {}
+  }
+   catch (err) {
+    return res.json(400).json({
+      status:"failed",
+      message:"Something wrong with system"
+
+    })
+  }
 };
 
 const userVerify = async (req, res) => {
@@ -332,5 +388,12 @@ const verifyResetPassword = async (req, res) => {
   }
 };
 
+const logout=async (req,res)=>{
+   res.cookie('token',"");
+   return res.json({
+    success:true,
+    message:"User logout succefully"
+   })
+}
 
-export { register, userVerify, login, resetPassword, verifyResetPassword };
+export { register, userVerify, login, resetPassword, verifyResetPassword,logout };

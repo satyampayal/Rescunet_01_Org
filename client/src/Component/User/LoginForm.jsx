@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom"; // If you're using react-router for navigation
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { loginAccount } from "../../redux/slices/authSlices";
+import toast from "react-hot-toast";
 const LoginForm = () => {
   const navigate=useNavigate();
+  const dispatch=useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -49,11 +52,12 @@ const LoginForm = () => {
     setIsFormValid(isValid);
   }, [formData, errors]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async  (e) => {
     e.preventDefault();
     if (isFormValid) {
-      console.log("Logging in with:", formData);
-      // Perform login logic (API request, redirect, etc.)
+       const response= await dispatch(loginAccount(formData))
+       if(response?.payload?.data?.status=="success") navigate('/')
+        
     }
   };
 

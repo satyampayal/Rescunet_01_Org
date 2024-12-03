@@ -4,7 +4,9 @@ import upload from '../middleware/multer.middleware.js'
 import isLoggedIn from "../middleware/auth.middleware.js";
 const complainRoute=Router();
 
-complainRoute.post('/register',isLoggedIn,upload.array('images',5),complainRegister)
+complainRoute.post('/register',isLoggedIn,
+    upload.array('images',5),
+    complainRegister)
 complainRoute.get('/get',getAllComplain)
 complainRoute.post('/update/:complainId',isLoggedIn,updateComplain)
 

@@ -42,31 +42,31 @@ const complainRegister = async (req, res) => {
 
   // take userId from token whichis destructer in req.user done in Auth.mddleware
   const { id } = req.user;
-  if (
-    !firstName ||
-    !fatherName ||
-    !age ||
-    !contactAddress ||
-    !missingSince ||
-    !nearPoliceStationName ||
-    !Nationality ||
-    !gender ||
-    !languageKnown ||
-    !isStudent ||
-    !height ||
-    !hairColor ||
-    !built ||
-    !face ||
-    !identificationMarks ||
-    !health ||
-    !meantalHealth ||
-    !reportFill
-  ) {
-    return res.json({
-      status: false,
-      message: "All nesscery Field are required !",
-    });
-  }
+  // if (
+  //   !firstName ||
+  //   !fatherName ||
+  //   !age ||
+  //   !contactAddress ||
+  //   !missingSince ||
+  //   // !nearPoliceStationName ||
+  //   !Nationality ||
+  //   !gender ||
+  //   !languageKnown ||
+  //   !isStudent ||
+  //   !height ||
+  //   !hairColor ||
+  //   !built ||
+  //   !face ||
+  //   !identificationMarks ||
+  //   !health ||
+  //   !meantalHealth ||
+  //   !reportFill
+  // ) {
+  //   return res.json({
+  //     status: false,
+  //     message: "All nesscery Field are required !",
+  //   });
+  // }
 
   const complian = await Complain.create({
     postedBy: id,
@@ -104,6 +104,7 @@ const complainRegister = async (req, res) => {
     otherEmail,
   });
 
+  console.log(req.body)
   if (req.files) {
     try {
       for (const file of req.files) {
@@ -142,7 +143,7 @@ const getAllComplain = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    return res.josn({
+    return res.json({
       status: "Failed",
       message: "Get All Complaint error in Request",
     });

@@ -68,18 +68,19 @@ const RegistrationForm = () => {
     setIsFormValid(isValid);
   }, [formData, errors]);
 
-  const handleSubmit =  (e) => {
+  const handleSubmit = async  (e) => {
     e.preventDefault();
     if (isFormValid) {
       console.log(formData)
-      const response =  dispatch(createAccount(formData))
+      const response = await  dispatch(createAccount(formData))
       console.log(response)
-      if(response?.data?.success)
+      if(response?.data?.success){
         toast.success("User Register Successfully")
-      setIsFlipped(true); // Trigger flip animation
-      setTimeout(() => {
-        setIsFlipped(false); // Reset flip after success
-      }, 1000); // Match flip animation timing
+      setIsFlipped(true);// Trigger flip animation
+       }
+      // setTimeout(() => {
+      //   setIsFlipped(false); // Reset flip after success
+      // }, 1000); // Match flip animation timing
     }
   };
   const handleGoogleLoginSuccess = (credentialResponse) => {
