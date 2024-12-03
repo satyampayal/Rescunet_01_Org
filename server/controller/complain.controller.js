@@ -104,7 +104,6 @@ const complainRegister = async (req, res) => {
     otherEmail,
   });
 
-  console.log(req.body)
   if (req.files) {
     try {
       for (const file of req.files) {
@@ -149,7 +148,24 @@ const getAllComplain = async (req, res) => {
     });
   }
 };
-
+//get My All cases
+const getMyComplains=async (req,res)=>{
+  const {id}=req.user;
+  try {
+    const response = await Complain.find({postedBy:id});
+    return res.json({
+      status: "Success",
+      message: "Get My Complaints",
+      complains: response,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.json({
+      status: "Failed",
+      message: "Get My Complaint error in Request",
+    });
+  }
+};
 //update Complain
 
 const updateComplain = async (req, res) => {
@@ -212,4 +228,4 @@ const updateComplain = async (req, res) => {
   })
 };
 
-export { complainRegister, getAllComplain, updateComplain };
+export { complainRegister, getAllComplain, updateComplain, getMyComplains};

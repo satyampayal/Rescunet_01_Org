@@ -34,7 +34,7 @@ const MyProfile = () => {
           <Link to={'main'} className={` text-teal-400 text-center block ${currentStep==0?' border-b-2 border-green-500 ' :''}  " hover:text-teal-300 "`} onClick={()=>setCurrentStep(0)}>MAIN</Link>
           {/* <button className={` text-teal-400 ${currentStep==1?' w-20 h-20 bg-white rounded-full' :''}  " hover:text-teal-300 "`} onClick={()=>setCurrentStep(1)}>ADD CASE</button> */}
           <Link  to='addcase' className={` text-teal-400  text-center block ${currentStep==1?' border-b-2 border-green-500 ' :''}  " hover:text-teal-300 "` }  onClick={()=>setCurrentStep(1)}>ADD CASE</Link>
-          <button className={` text-teal-400 ${currentStep==2?' border-b-2 border-green-500' :''}  " hover:text-teal-300 "`} onClick={()=>setCurrentStep(2)}>MY CASES</button>
+          <Link to='mycases' className={` text-teal-400  text-center block ${currentStep==2?' border-b-2 border-green-500' :''}  " hover:text-teal-300 "`} onClick={()=>setCurrentStep(2)}>MY CASES</Link>
           <button className={` text-teal-400 ${currentStep==3?'border-b-2 border-green-500' :''}  " hover:text-teal-300 "`} onClick={()=>setCurrentStep(3)}>CASE WATCHLIST</button>
           <button className={` text-teal-400 ${currentStep==4?' border-b-2 border-green-500' :''}  " hover:text-teal-300 "`} onClick={()=>setCurrentStep(4)}>HELP FUNDRAISE</button>
           <button className={` text-teal-400 ${currentStep==5?' border-b-2 border-green-500' :''}  " hover:text-teal-300 "`} onClick={()=>setCurrentStep(5)}>SUPPORT</button>

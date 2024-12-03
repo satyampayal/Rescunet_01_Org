@@ -9,6 +9,7 @@ import MyProfile from './Component/User/MyProfile';
 import AddCase from './Component/Complains/AddCase';
 import LatestCase from './Component/Complains/LatestCase';
 import { useSelector } from 'react-redux';
+import MyCases from './Component/User/MyCases';
 function App() {
   const {isLoggedIn}=useSelector((state)=>state.auth);
   const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
@@ -25,9 +26,11 @@ function App() {
       {
         isLoggedIn ?
         <Route path='/my' element={<MyProfile/>}>
+        <Route index  element={<LatestCase/>}/>
         <Route  path='addcase' element={<AddCase/>}/>
         <Route index path='main' element={<LatestCase/>}/>
-        <Route index  element={<LatestCase/>}/>
+        <Route index path='mycases' element={<MyCases/>}/>
+        
         </Route>
         :
         <Route path='*' element={<LoginForm/>} />

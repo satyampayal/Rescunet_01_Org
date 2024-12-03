@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 
 let initialState={
     complainsList:[],
+    myComplaints:[],
     loadList:false
 }
 
@@ -37,6 +38,16 @@ export const getAllComplains=createAsyncThunk('/complain/get',async ()=>{
         
     }
 })
+
+export const getAllMyComplains=createAsyncThunk('/complain/get/my',async ()=>{
+    try {
+        const response=axiosInstance.get('complain/get/my');
+        return await response;
+    } catch (error) {
+        console.log(error?.message)
+        
+    }
+})
 const complainSlice=createSlice({
     name:'complain',
     initialState,
@@ -46,6 +57,9 @@ const complainSlice=createSlice({
             console.log(action)
             state.loadList=true;
             state.complainsList=action?.payload?.data?.complains;
+        })
+        .addCase(getAllMyComplains.fulfilled,(state,action)=>{
+            state.myComplaints=action?.payload?.data?.complains;
         })
        
     }

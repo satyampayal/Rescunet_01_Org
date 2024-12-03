@@ -70,8 +70,9 @@ const AddCase = () => {
     for(const [key,value]  of Object.entries(formData)){
       personFormData.append(key,value)
     }
-    personFormData.append('images',images)
-    console.log(personFormData)
+    images.forEach((image, index) => {
+      personFormData.append("images", image); // Use "images" key to represent file field
+    });
      const resppnse=await  dispatch(registerComplain(personFormData));
      console.log(resppnse)
      if(resppnse?.payload?.data?.status){
