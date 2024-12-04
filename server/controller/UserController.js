@@ -244,12 +244,12 @@ const userVerify = async (req, res) => {
 const login = async (req, res) => {
   const { email, password } = req.body;
   if (email == "" || password == "") {
-    res.json({
+   return  res.json({
       status: "Failed",
       message: "Empty input filed!",
     });
   } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
-    res.json({
+   return  res.json({
       status: "Failed",
       message: "Invalid Email Enterd  ",
     });

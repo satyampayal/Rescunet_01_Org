@@ -45,7 +45,7 @@ const MyCases = () => {
 
   return (
     <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {myComplaints.length>0 ?  myComplaints.map((person, index) => (
+      {myComplaints?  myComplaints.map((person, index) => (
         <div
           key={index}
           className="relative border rounded-lg shadow-lg overflow-hidden group"
