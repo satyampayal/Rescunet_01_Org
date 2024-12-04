@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa"; // Icons for edit and delete
 import { useSelector,useDispatch } from "react-redux";
 import { getAllMyComplains } from "../../redux/slices/complianSlices";
@@ -6,7 +6,7 @@ import { getAllMyComplains } from "../../redux/slices/complianSlices";
 const MyCases = () => {
     const {myComplaints}=useSelector((state)=>state.complain)
     const dispatch=useDispatch();
-    console.log(myComplaints)
+    const [deleteTarget, setDeleteTarget] = useState(null);
   const missingPersons = [
     {
       firstName: "John",
@@ -27,20 +27,29 @@ const MyCases = () => {
       image: "", // Image URL if available
     },
   ];
+  console.log(deleteTarget)
   useEffect(()=>{
     const myComplaints= async ()=>{
        await  dispatch(getAllMyComplains())
 
     }
     myComplaints();
-  },[])
+  },[dispatch])
 
   const handleEdit = (person) => {
     console.log("Edit case for:", person);
   };
+  const confirmDelete = (person) => {
+    setDeleteTarget(person);
+  };
 
-  const handleDelete = (person) => {
-    console.log("Delete case for:", person);
+  const handleDeleteConfirm = () => {
+    console.log("Deleting:", deleteTarget);
+    setDeleteTarget(null);
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteTarget(null);
   };
 
   return (
@@ -91,7 +100,7 @@ const MyCases = () => {
               <FaEdit className="w-5 h-5" />
             </button>
             <button
-              onClick={() => handleDelete(person)}
+              onClick={() => confirmDelete(person)}
               className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600"
             >
               <FaTrash className="w-5 h-5" />
@@ -102,6 +111,34 @@ const MyCases = () => {
       :
       <h1 className="text-center text-4xl text-white">You don't have publish any report</h1>
     }
+
+    {/* Delete Confirmation Modal */}
+    {deleteTarget && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-lg font-bold mb-4 text-blue-300">
+              Are you sure you want to delete this case?
+            </h2>
+            <p className="mb-4">
+              This action cannot be undone. Please confirm your decision.
+            </p>
+            <div className="flex justify-end gap-4">
+              <button
+                onClick={handleCancelDelete}
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDeleteConfirm}
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              >
+                Confirm Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

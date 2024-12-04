@@ -227,5 +227,36 @@ const updateComplain = async (req, res) => {
     complainExists
   })
 };
+//Delete complian 
+const deleteComplainByUser=async (req,res)=>{
+  // Validate user is Allow to Delete
+  const {id}=req.user;
+  const {postedBy,postId}=req.body;
+  if(!postedBy || !postId) {
+       return res.json({
+        status:"failed",
+        message:"Posting Id or complainId are Missed "
+       })
+  }
+  if(id!=postedBy) {
+    return res.json({
+      status:"failed",
+      message:"You don't have premission to Deleted a record"
+    })
+  }
 
-export { complainRegister, getAllComplain, updateComplain, getMyComplains};
+  // now we know user is valid it can delete record
+  const result=await Complain.findByIdAndDelete({_id:postId})
+  if(!result){
+    return res.json({
+      status:"failed",
+      message:"Some error in Deleted Try Again or not found complain Id "
+    })
+  }
+   return res.json({
+  status:"success",
+  message:"Deletd Complain Successfully"
+   })
+  
+}
+export { complainRegister, getAllComplain, updateComplain, getMyComplains,deleteComplainByUser};
