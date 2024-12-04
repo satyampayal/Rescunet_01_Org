@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 let initialState={
     complainsList:[],
     myComplaints:[],
+    searchComplainList:[],
     loadList:false
 }
 
@@ -48,6 +49,34 @@ export const getAllMyComplains=createAsyncThunk('/complain/get/my',async ()=>{
         
     }
 })
+
+export const deleteMyComplain=createAsyncThunk('/complain/delete',async (data)=>{
+    try {
+        console.log(data)
+        // :postedBy/:postId
+        const response=axiosInstance.delete(`complain/delete/by/user/${data?.postedBy}/${data.postId}`,data);
+        toast.promise(response,{
+            loading:"wait for deleting complain",
+            success:(data)=>{
+                return data?.data?.message
+            },
+            error:"please try again "
+        })
+    } catch (error) {
+         toast.error(error?.message ||"some issue please try again")
+    }
+})
+
+export const searchComplain=createAsyncThunk('/complain/search',async (searchParams)=>{
+    try {
+        const response=axiosInstance.get('complain/search',{params:searchParams})
+        return await response;
+        
+    } catch (error) {
+        console.log(error?.message)
+        
+    }
+})
 const complainSlice=createSlice({
     name:'complain',
     initialState,
@@ -60,6 +89,9 @@ const complainSlice=createSlice({
         })
         .addCase(getAllMyComplains.fulfilled,(state,action)=>{
             state.myComplaints=action?.payload?.data?.complains;
+        })
+        .addCase(searchComplain.fulfilled,(state,action)=>{
+            state.searchComplainList=action?.payload?.data?.data;
         })
        
     }

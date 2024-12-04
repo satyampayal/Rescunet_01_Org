@@ -10,12 +10,17 @@ import AddCase from './Component/Complains/AddCase';
 import LatestCase from './Component/Complains/LatestCase';
 import { useSelector } from 'react-redux';
 import MyCases from './Component/User/MyCases';
+import ListsOfComplains from './Component/ListsOfComplains';
 function App() {
   const {isLoggedIn}=useSelector((state)=>state.auth);
   const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
   return (
     <Routes >
-      <Route path='' element={<HomePage/>}/>
+
+      <Route path=''  element={<HomePage/>}>
+      <Route index element={<ListsOfComplains/>} />
+      {/* <Route path=`missing-persons/${}` /> */}
+      </Route>
       <Route path='/user/register' element={
          <GoogleOAuthProvider  clientId={GOOGLE_CLIENT_ID}>
          <RegistrationForm/>

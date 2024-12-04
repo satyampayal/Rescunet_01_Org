@@ -6,6 +6,8 @@ import { IoExit } from "react-icons/io5";
 import { FaUser } from "react-icons/fa";
 import { logoutAccount } from "../redux/slices/authSlices";
 import ListsOfComplains from "./ListsOfComplains";
+import { Outlet } from "react-router-dom";
+import SearchBar from "./SearchBar";
 const HomePage = () => {
     const dispatch=useDispatch();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -33,12 +35,12 @@ const HomePage = () => {
             <div className="bg-gray-800 py-2 px-6">
                 <div className="container mx-auto flex md:flex-row flex-col justify-between items-center">
                     <p className="text-sm">Welcome to RescueNet</p>
-                    {!isLoggedIn ? <div className="space-x-4">
+                    {!isLoggedIn ? <div className="space-x-4 ">
                         <Link to={'/user/login'} className="text-teal-400 hover:text-teal-300">Login</Link>
                         <Link to={'/user/register'} className="text-teal-400 hover:text-teal-300">Register</Link>
                     </div>
                         :
-                        <div className="  justify-self-end flex gap-1   items-center">
+                        <div className="  justify-self-end flex md:flex-row flex-col gap-1   items-center">
                             <p className="text-lg text-white">Hi,{`${userData?.firstName}`} {`${userData?.lastName}`} </p>
                             <div className="space-x-4 flex ">
                                 <button onClick={logouHandle} className="text-teal-400 hover:text-teal-300 flex gap-1">
@@ -61,7 +63,7 @@ const HomePage = () => {
                     <h1 className="text-2xl font-bold">RescueNET</h1>
                     {/* Hamburger Menu for Small Screens */}
                     <button
-                        className="md:hidden absolute top-[13%] right-5 text-teal-400   "
+                        className="md:hidden absolute top-[17%] right-5 text-teal-400   "
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -186,6 +188,8 @@ const HomePage = () => {
                 </div>
             </header>
 
+           {/* Searching Bar */}
+           <SearchBar/>
             {/* Hero Section */}
             <section className="flex flex-col items-center justify-center text-center py-20 px-4">
                 <h2 className="text-4xl font-bold mb-6">
@@ -196,7 +200,8 @@ const HomePage = () => {
                     missing people. We report, profile, publicize, and investigate.
                 </p>
             </section>
-            <ListsOfComplains/>
+            <Outlet/>
+            {/* <ListsOfComplains/> */}
 
         </div>
     );

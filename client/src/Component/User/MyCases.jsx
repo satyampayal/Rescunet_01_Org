@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa"; // Icons for edit and delete
 import { useSelector,useDispatch } from "react-redux";
-import { getAllMyComplains } from "../../redux/slices/complianSlices";
+import { deleteMyComplain, getAllMyComplains } from "../../redux/slices/complianSlices";
 
 const MyCases = () => {
     const {myComplaints}=useSelector((state)=>state.complain)
@@ -43,9 +43,18 @@ const MyCases = () => {
     setDeleteTarget(person);
   };
 
-  const handleDeleteConfirm = () => {
+  const handleDeleteConfirm = async () => {
     console.log("Deleting:", deleteTarget);
+    const  data={
+      postedBy:deleteTarget.postedBy,
+    postId:deleteTarget._id
+    }
+    console.log(data)
+     const response=await dispatch(deleteMyComplain(data))
+    if(response){
     setDeleteTarget(null);
+    dispatch(getAllMyComplains())
+  }
   };
 
   const handleCancelDelete = () => {
@@ -60,12 +69,12 @@ const MyCases = () => {
           className="relative border rounded-lg shadow-lg overflow-hidden group"
         >
           {/* Image or Placeholder */}
-          <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+          <div className="w-full h-60 bg-gray-200 flex items-center justify-center">
             {person?.images.length>0 ? (
               <img
                 src={person?.images[0].secure_url}
                 alt={`${person?.firstName} ${person?.lastName}`}
-                className="w-full h-full object-cover"
+                className="w-full h-full  object-contain"
               />
             ) : (
               <span className="text-gray-500 text-sm">No Image Available</span>

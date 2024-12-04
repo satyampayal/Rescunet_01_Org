@@ -231,8 +231,8 @@ const updateComplain = async (req, res) => {
 const deleteComplainByUser=async (req,res)=>{
   // Validate user is Allow to Delete
   const {id}=req.user;
-  const {postedBy,postId}=req.body;
-  if(!postedBy || !postId) {
+  const {postedBy,postId}=req.params;
+  if(postedBy=="" || postId=="") {
        return res.json({
         status:"failed",
         message:"Posting Id or complainId are Missed "
@@ -259,4 +259,23 @@ const deleteComplainByUser=async (req,res)=>{
    })
   
 }
-export { complainRegister, getAllComplain, updateComplain, getMyComplains,deleteComplainByUser};
+
+//Search Missing Record
+const searchMissingPerson=async (req,res)=>{
+  const { firstName, lastName, age, contactAddress, gender,missingSince } = req.query;
+
+  const query = {};
+  if (firstName) query.firstName = { $regex: firstName, $options: "i" }; // Case-insensitive search
+  if (lastName) query.lastName = { $regex: lastName, $options: "i" };
+  if (age) query.age = Number(age);
+  if (contactAddress) query.contactAddress = { $regex: contactAddress, $options: "i" };
+  if (gender) query.gender = { $regex: gender, $options: "i" };
+ if (missingSince) query.missingSince={$regex:missingSince,$options:"i"};
+  try {
+      const results = await Complain.find(query).limit(10); // Limit results to prevent overloading
+      res.status(200).json({ success: true, data: results });
+  } catch (error) {
+      res.status(500).json({ success: false, message: "Error searching for missing persons" });
+  }
+}
+export { complainRegister, getAllComplain, updateComplain, getMyComplains,deleteComplainByUser,searchMissingPerson};
