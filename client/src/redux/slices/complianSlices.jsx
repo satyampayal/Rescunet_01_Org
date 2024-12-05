@@ -83,14 +83,17 @@ const complainSlice=createSlice({
     reducers:{},
     extraReducers:(builder)=>{
         builder.addCase(getAllComplains.fulfilled, (state,action)=>{
-            console.log(action)
             state.loadList=true;
             state.complainsList=action?.payload?.data?.complains;
         })
         .addCase(getAllMyComplains.fulfilled,(state,action)=>{
             state.myComplaints=action?.payload?.data?.complains;
         })
+        .addCase(searchComplain.pending,(state,action)=>{
+            state.loadList=true;
+        })
         .addCase(searchComplain.fulfilled,(state,action)=>{
+            state.loadList=false
             state.searchComplainList=action?.payload?.data?.data;
         })
        

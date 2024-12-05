@@ -4,7 +4,7 @@ import axiosInstance from "../../config/axiosIns";
 import toast from "react-hot-toast";
 const initialState={
     isLoggedIn:localStorage.getItem('isLoggedIn') || false,
-    data:localStorage.getItem('data') || {}
+    data: localStorage.getItem('data') ||''
 }
 
 export const createAccount=createAsyncThunk('/auth/signup',async (data)=>{
@@ -26,7 +26,7 @@ export const createAccount=createAsyncThunk('/auth/signup',async (data)=>{
 
 export const loginAccount=createAsyncThunk('/auth/login',async (data)=>{
     try {
-        const response=axiosInstance.post('/user/login',data);
+        const response=axiosInstance.post('user/login',data);
         toast.promise(response,{
             loading:"wait for login",
             success:(data)=>{
@@ -37,7 +37,7 @@ export const loginAccount=createAsyncThunk('/auth/login',async (data)=>{
     return await response;
 
     } catch (error) {
-        toast.error(error?.response?.data?.message)
+        toast.error(error?.message)
         
     }
 
@@ -65,7 +65,6 @@ const authSlice=createSlice({
     extraReducers:(builder)=>{
         builder
         .addCase(loginAccount.fulfilled,(state,action)=>{
-            console.log(action);
             localStorage.setItem('isLoggedIn',true);
             localStorage.setItem('data',JSON.stringify(action?.payload?.data?.user))
             state.data=action?.payload?.data?.user;

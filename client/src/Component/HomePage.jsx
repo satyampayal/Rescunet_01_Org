@@ -14,7 +14,7 @@ const HomePage = () => {
     const [activeDropdown, setActiveDropdown] = useState("");
     const { isLoggedIn } = useSelector((state) => state.auth);
     let { data } = useSelector((state) => state.auth);
-    let userData=localStorage.getItem('data') ;
+    let userData=localStorage.getItem('data');
     userData=JSON.parse(userData)
 
 
@@ -70,7 +70,7 @@ const HomePage = () => {
                     </button>
                     {/* Navbar Links */}
                     <nav
-                        className={`${isMenuOpen ? "  z-[1000] absolute top-[25%] bg-[#051622] w-[85vw] h-[80vh] flex justify-center items-center rounded-lg " : "hidden"
+                        className={`${isMenuOpen ? "  z-[1000] absolute top-[25%] bg-[#051622] w-[85vw] h-[auto] flex justify-start items-center rounded-lg p-2 " : "hidden"
                             } md:flex flex-col md:flex-row md:items-center md:space-x-6  md:w-auto  mt-4 md:mt-0 `}
                     >
                         <a href="#" className="hover:text-teal-300">
@@ -83,12 +83,12 @@ const HomePage = () => {
                             onMouseEnter={() => toggleDropdown("about")}
                             onMouseLeave={() => toggleDropdown("")}
                         >
-                            <button className="hover:text-teal-300 flex items-center">
+                            <button className="hover:text-teal-300 flex items-center ">
                                 About Us <FaChevronDown className="ml-1" />
                             </button>
                             {activeDropdown === "about" && (
                                 <div
-                                    className="md:absolute relative mt-2 bg-gray-800 text-white rounded-lg shadow-lg"
+                                    className="md:absolute relative mt-2 bg-gray-800 text-white rounded-lg shadow-lg "
                                     onMouseEnter={() => toggleDropdown("about")}
                                     onMouseLeave={() => toggleDropdown("")}
                                 >
@@ -196,7 +196,7 @@ const HomePage = () => {
                     WORKING WITH LAW ENFORCEMENT AND THE FAMILIES OF THE MISSING
                 </h2>
                 <p className="max-w-3xl mb-6 text-lg text-gray-200">
-                    Missing Persons Center is the number one source of profiling of
+                    RescueNet is the number one source of profiling of
                     missing people. We report, profile, publicize, and investigate.
                 </p>
             </section>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { searchComplain } from "../redux/slices/complianSlices";
 
 const SearchBar = () => {
-    const { searchComplainList } = useSelector((state) => state.complain);
+    const { searchComplainList,loadList } = useSelector((state) => state.complain);
     const [searchTerm, setSearchTerm] = useState("");
     const dispatch = useDispatch();
 
@@ -46,6 +46,11 @@ const SearchBar = () => {
             </div>
 
             {/* Search Results */}
+            {
+                searchTerm && loadList &&   <div className="flex justify-center items-center  ">
+                <div className="w-8 h-8 border-4 border-green-500 border-solid rounded-full border-t-transparent animate-spin"></div>
+              </div>
+            }
             {  searchTerm && searchComplainList?.length  > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6  sticky  top-[30%] w-[60vw]  shadow-2xl shadow-slate-400    rounded-lg border-[1px] p-2  z-[100] mx-auto ">
                     {searchComplainList.map((person, index) => (
@@ -92,7 +97,7 @@ const SearchBar = () => {
             ) : (
                 <div className="text-center text-red-700 text-lg mt-6">
                     {
-                        searchTerm!=="" && <h1>Not Found any record</h1>
+                        searchTerm && !loadList && <h1>Not Found any record</h1>
                     }
                 </div>
             )}

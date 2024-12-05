@@ -30,7 +30,7 @@ const ListsOfComplains = () => {
         >
           <h3 className="text-xl font-bold text-gray-800 mb-4 text-center">{person?.firstName} {person?.lastName}</h3>
           <div className=" flex justify-center text-blue-500 mb-4 hover:scale-95  duration-200 w-full      ">
-            <img onLoad={'loading images'}  src={  person?.images.length>0?person.images[0]?.secure_url :'https://missingpersonscenter.org/wp-content/uploads/elementor/thumbs/IMG_0754-qxg73zp8a3z7dnn9z603nov3vkay0klwywux3m61ws.jpeg'}
+            <img onLoad={()=>"image load"}  src={  person?.images.length>0?person.images[0]?.secure_url :'https://missingpersonscenter.org/wp-content/uploads/elementor/thumbs/IMG_0754-qxg73zp8a3z7dnn9z603nov3vkay0klwywux3m61ws.jpeg'}
              className=" hover:border-[4px] hover:border-blue-300 rounded-[10px] duration-200  object-contain "
             />
           </div>
