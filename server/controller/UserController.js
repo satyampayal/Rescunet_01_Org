@@ -8,7 +8,7 @@ import { v4 } from "uuid";
 import sendEmail from "../utils/sendEmail.js";
 
 const emailSend=(id,email)=>{
-  const currenturl = "http://localhost:3000/";
+  const currenturl = "https://rescunet-01-org-4.onrender.com";
   const uniqueString = v4() + id;
   const subject = "Verify Your Email";
   const body = `<p>Verify your Email address to complete the signup and login into your account.</p><p>This is link <b>experies in 6 hours </b></p><p>Press <a href=${
@@ -97,10 +97,11 @@ const register = async (req, res) => {
     }
 
     // now send a email verfication
-    const currenturl = "http://localhost:3000/";
+    const currenturl = "https://rescunet-01-org-4.onrender.com";
     const uniqueString = v4() + user._id;
     const subject = "Verify Your Email";
-    const body = `<p>Verify your Email address to complete the signup and login into your account.</p><p>This is link <b>experies in 6 hours </b></p><p>Press <a href=${
+    const body = `<p>Verify your Email address to complete the signup and login into your account.</p><p>This is link <b>experies in 6 hours </b></p><p>Press 
+    <a href=${
       currenturl + "user/verify/" + user._id + "/" + uniqueString
     } >here</a> to proceed.</p>`;
     bcrypt
