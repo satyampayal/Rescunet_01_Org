@@ -63,14 +63,14 @@ const HomePage = () => {
                     <h1 className="text-2xl font-bold">RescueNET</h1>
                     {/* Hamburger Menu for Small Screens */}
                     <button
-                        className="md:hidden absolute top-[17%] right-5 text-teal-400   "
+                        className="md:hidden relative text-teal-400   "
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                     >
                         {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
                     </button>
                     {/* Navbar Links */}
                     <nav
-                        className={`${isMenuOpen ? " z-[1000] absolute top-[15%] bg-[#051622] w-[90vw] h-[80vh] flex justify-start items-center rounded-lg " : "hidden"
+                        className={`${isMenuOpen ? "  z-[1000] absolute top-[25%] bg-[#051622] w-[85vw] h-[80vh] flex justify-center items-center rounded-lg " : "hidden"
                             } md:flex flex-col md:flex-row md:items-center md:space-x-6  md:w-auto  mt-4 md:mt-0 `}
                     >
                         <a href="#" className="hover:text-teal-300">

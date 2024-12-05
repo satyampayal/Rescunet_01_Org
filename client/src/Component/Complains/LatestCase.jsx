@@ -73,7 +73,7 @@ function LatestCase() {
             }
            
           </div>
-          <p className="text-white flex gap-1 mb-1 "> <SlCalender size={20} color="green"/> <span className="">Missing since : </span> {person?.missingSince}</p>
+          <div className="text-white  mb-1 flex md:text-[18px] text-[14px]  "> <SlCalender  className='md:size-6 size-5' color="green"/> <span className="">Missing since : </span> {person?.missingSince}</div>
           <p className="text-white flex justify-center "> <CiLocationOn size={28} color="green" /> {person?.Nationality}</p>
           </div>
         )): 

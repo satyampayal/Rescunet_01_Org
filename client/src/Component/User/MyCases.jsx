@@ -34,7 +34,7 @@ const MyCases = () => {
 
     }
     myComplaints();
-  },[dispatch])
+  },[])
 
   const handleEdit = (person) => {
     console.log("Edit case for:", person);
