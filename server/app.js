@@ -25,7 +25,7 @@ const app=express();
 app.use(express.json())
 app.use(cors(
     {
-    origin:[process.env.FRONTEND_URL],
+    origin:[process.env.FRONTEND_URL,"https://rescunet-01-org-4.onrender.com"],
     credentials:true,
 } 
 ));
