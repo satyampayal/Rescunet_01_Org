@@ -1,10 +1,13 @@
-import axios from 'axios';
-const BASE_URL="http://localhost:3000";
-// const BASE_URL="https://rescunet-01-org-3.onrender.com";
+import axios from "axios";
+const BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:3000"
+    : "https://rescunet-01-org-4.onrender.com";
 
-const axiosInstance=axios.create();
+const axiosInstance = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true, // Needed for cookies or session-based auth
+  timeout: 10000, // Optional, adjust as needed
+});
 
-axiosInstance.defaults.baseURL=BASE_URL;
-axiosInstance.defaults.withCredentials=true;
-axiosInstance.defaults.timeout=10000000000000;
 export default axiosInstance;
