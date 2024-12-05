@@ -18,9 +18,9 @@ const __dirname=path.dirname(_filename);
 console.log(__dirname);
  app.use(express.static(path.join(__dirname,'../client/dist')));
 // // render cliient 
-// app.get('*',(req,res)=>{
-//     res.sendFile(path.join(__dirname,'/client/dist/index.html'))
-// })
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'../client/dist/index.html'))
+})
 // -------------Deployment  End ---------------------
 app.use(express.json())
 app.use(cors(
