@@ -6,7 +6,7 @@ import { SlCalender } from 'react-icons/sl';
 import { CiLocationOn } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 function LatestCase() {
-     const {searchComplainList} =useSelector((state)=>state.complain);
+     const {searchComplainList,loadList} =useSelector((state)=>state.complain);
      const dispatch=useDispatch();
     
      
@@ -30,6 +30,11 @@ function LatestCase() {
         <div className="min-h-screen border-red-500 border-[2px] rounded-md text-white py-10">
       <h2 className="text-3xl font-bold text-center mb-8">Latest Case</h2>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
+      {
+        loadList && <div className="flex justify-center items-center  ">
+          <div className="w-8 h-8 border-4 border-blue-500 border-solid rounded-full border-t-transparent animate-spin"></div>
+        </div>
+      }
         {searchComplain? searchComplainList?.map((person, index) => (
           <Link to={'/missing-person/'+person._id}
             key={index}

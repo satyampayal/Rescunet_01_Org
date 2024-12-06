@@ -4,7 +4,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { deleteMyComplain, getAllMyComplains } from "../../redux/slices/complianSlices";
 
 const MyCases = () => {
-    const {myComplaints}=useSelector((state)=>state.complain)
+    const {myComplaints,loadList}=useSelector((state)=>state.complain)
     const dispatch=useDispatch();
     const [deleteTarget, setDeleteTarget] = useState(null);
  
@@ -42,7 +42,12 @@ const MyCases = () => {
 
   return (
     <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      {myComplaints?  myComplaints.map((person, index) => (
+       {
+        loadList && <div className="flex justify-center items-center  ">
+          <div className="w-8 h-8 border-4 border-blue-500 border-solid rounded-full border-t-transparent animate-spin"></div>
+        </div>
+      }
+      {myComplaints?  myComplaints?.map((person, index) => (
         <div
           key={index}
           className="relative border rounded-lg shadow-lg overflow-hidden group"

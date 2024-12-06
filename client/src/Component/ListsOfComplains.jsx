@@ -22,10 +22,11 @@ const ListsOfComplains = () => {
   return (
     <div className=" " >
     <h1 className="text-2xl text-green-400  ml-10  text-pretty">LATEST CASES ENTERED</h1>
+   
     <div className="flex flex-wrap justify-center gap-6 p-6">
     {
         loadList && <div className="flex justify-center items-center  ">
-          <div className="w-8 h-8 border-4 border-green-500 border-solid rounded-full border-t-transparent animate-spin"></div>
+          <div className="w-8 h-8 border-4 border-blue-500 border-solid rounded-full border-t-transparent animate-spin"></div>
         </div>
       }
       {complainsList? complainsList.map((person) => (
