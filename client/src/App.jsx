@@ -11,6 +11,7 @@ import LatestCase from './Component/Complains/LatestCase';
 import { useSelector } from 'react-redux';
 import MyCases from './Component/User/MyCases';
 import ListsOfComplains from './Component/ListsOfComplains';
+import EmailVerification from './Component/EmailVerfication';
 function App() {
   const {isLoggedIn}=useSelector((state)=>state.auth);
   const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
@@ -41,6 +42,7 @@ function App() {
         <Route path='*' element={<LoginForm/>} />
       }
     
+    <Route path='/user/verify/:userId/:uniqueString'  element={<EmailVerification/>}  />
     <Route path='*' element={<LoginForm/>} />
 
 

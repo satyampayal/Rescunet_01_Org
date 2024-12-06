@@ -43,7 +43,7 @@ export const loginAccount=createAsyncThunk('/auth/login',async (data)=>{
 
 })
 
-export const  logoutAccount=createAsyncThunk('/auth/logout',()=>{
+export const  logoutAccount=createAsyncThunk('/auth/logout', async ()=>{
     try {
         const response=axiosInstance.get('/user/logout');
         toast.promise(response,{
@@ -57,6 +57,23 @@ export const  logoutAccount=createAsyncThunk('/auth/logout',()=>{
     }
 })
 
+export const verifyEmail=createAsyncThunk('/auth/email/verify',async ({userId,uniqueString})=>{
+    try {
+        const response=axiosInstance.get(`user/verify/${userId}/${uniqueString}`)
+        toast.promise(response,{
+            loading:"wait for email verify",
+            success:(data)=>{
+                return data?.data?.message
+            },
+            error:"try again"
+        })
+        return await response;
+    } catch (error) {
+        toast.error("Something wrong with email or url ")
+        
+    }
+
+})
 
 const authSlice=createSlice({
     name:"auth",

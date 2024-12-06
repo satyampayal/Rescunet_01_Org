@@ -8,11 +8,11 @@ import { v4 } from "uuid";
 import sendEmail from "../utils/sendEmail.js";
 
 const emailSend=(id,email)=>{
-  const currenturl = "https://rescunet-01-org-4.onrender.com";
+  const currenturl = "https://rescunet-01-org-5.onrender.com";
   const uniqueString = v4() + id;
   const subject = "Verify Your Email";
   const body = `<p>Verify your Email address to complete the signup and login into your account.</p><p>This is link <b>experies in 6 hours </b></p><p>Press <a href=${
-    currenturl + "user/verify/" + id + "/" + uniqueString
+    currenturl + "/user/verify/" + id + "/" + uniqueString
   } >here</a> to proceed.</p>`;
   bcrypt
   .hash(uniqueString, 10)
@@ -97,12 +97,12 @@ const register = async (req, res) => {
     }
 
     // now send a email verfication
-    const currenturl = "https://rescunet-01-org-4.onrender.com";
+    const currenturl = "https://rescunet-01-org-5.onrender.com";
     const uniqueString = v4() + user._id;
     const subject = "Verify Your Email";
     const body = `<p>Verify your Email address to complete the signup and login into your account.</p><p>This is link <b>experies in 6 hours </b></p><p>Press 
     <a href=${
-      currenturl + "user/verify/" + user._id + "/" + uniqueString
+      currenturl + "/user/verify/" + user._id + "/" + uniqueString
     } >here</a> to proceed.</p>`;
     bcrypt
       .hash(uniqueString, 10)
@@ -171,14 +171,20 @@ const userVerify = async (req, res) => {
                 .then(() => {
                   let message = "Link has expire. Please signup again ";
                   // res.redirect(`/user/verified/error=true&message=${message}`);
-                  res.send(`<p>${message}</p>`);
+                  res.json({
+                    status:true,
+                    message,
+                  });
                 })
                 .catch((error) => {
                   console.log(error);
                   let message =
                     "clearing User with expired unique strinng failed ";
                   // res.redirect(`/user/verified/error=true&message=${message}`);
-                  res.send(`<p>${message}</p>`);
+                  res.json({
+                    status:true,
+                    message,
+                  });
                 });
             })
             .catch((error) => {
@@ -186,7 +192,10 @@ const userVerify = async (req, res) => {
               let message =
                 "An error occured while clearing expired user verification record!  ";
               // res.redirect(`/user/verified/error=true&message=${message}`);
-              res.send(`<p>${message}</p>`);
+              res.json({
+                status:true,
+                message,
+              });
             });
         } else {
           bcrypt
@@ -197,40 +206,55 @@ const userVerify = async (req, res) => {
                   .then(() => {
                     UserVerification.deleteOne({ userId })
                       .then(() => {
-                        res.send("<h1>Email verified Successfully </h1>");
+                        res.status(200).json({status:"true",message:"Email verfied Successfully!"});
                       })
                       .catch((error) => {
                         console.log(error);
                         let message =
-                          "An error occured while  finalizinf successfull verifivation";
+                          "An error occured while";
                         // res.redirect(`/user/verified/error=true&message=${message}`);
-                        res.send(`<p>${message}</p>`);
+                        res.json({
+                          status:true,
+                          message,
+                        });
                       });
                   })
                   .catch((error) => {
                     console.log(error);
                     let message =
-                      "An error occured while updateing user record to show verfied!";
+                      "An error occured while updating user record to show verfied!";
                     // res.redirect(`/user/verified/error=true&message=${message}`);
-                    res.send(`<p>${message}</p>`);
+                    res.json({
+                      status:true,
+                      message,
+                    });
                   });
               } else {
                 let message = "Invalid link ,check your InBox";
                 // res.redirect(`/user/verified/error=true&message=${message}`);
-                res.send(`<p>${message}</p>`);
+                res.json({
+                  status:true,
+                  message,
+                });
               }
             })
             .catch((error) => {
               let message = "An error occured while comaping unique string";
               // res.redirect(`/user/verified/error=true&message=${message}`);
-              res.send(`<p>${message}</p>`);
+              res.json({
+                status:true,
+                message,
+              });
             });
         }
       } else {
         let message =
-          "Account record doesn't exists or has been veriied already. Please sign up or login  ";
+          "email  has been verified already.  ";
         // res.redirect(`/user/verified/error=true&message=${message}`);
-        res.send(`<p>${message}</p>`);
+        res.json({
+          status:true,
+          message,
+        });
       }
     })
     .catch((errror) => {
