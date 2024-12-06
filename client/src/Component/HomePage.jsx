@@ -8,6 +8,7 @@ import { logoutAccount } from "../redux/slices/authSlices";
 import ListsOfComplains from "./ListsOfComplains";
 import { Outlet } from "react-router-dom";
 import SearchBar from "./SearchBar";
+import Footer from "./Footer";
 const HomePage = () => {
     const dispatch=useDispatch();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -202,6 +203,7 @@ const HomePage = () => {
             </section>
             <Outlet/>
             {/* <ListsOfComplains/> */}
+            <Footer/>
 
         </div>
     );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
+import Footer from "../Footer";
 
 const MyProfile = () => {
     let userData=localStorage.getItem('data') ;
@@ -43,7 +44,7 @@ const MyProfile = () => {
       </nav>
        
       <Outlet/>
-   
+      <Footer/>
       
 
     
