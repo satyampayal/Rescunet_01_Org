@@ -8,7 +8,7 @@ import { v4 } from "uuid";
 import sendEmail from "../utils/sendEmail.js";
 
 const emailSend=(id,email)=>{
-  const currenturl = "https://rescunet-01-org-5.onrender.com";
+  const currenturl = "https://rescunet-01-org-4.onrender.com";
   const uniqueString = v4() + id;
   const subject = "Verify Your Email";
   const body = `<p>Verify your Email address to complete the signup and login into your account.</p><p>This is link <b>experies in 6 hours </b></p><p>Press <a href=${
@@ -97,7 +97,7 @@ const register = async (req, res) => {
     }
 
     // now send a email verfication
-    const currenturl = "https://rescunet-01-org-5.onrender.com";
+    const currenturl = "https://rescunet-01-org-4.onrender.com";
     const uniqueString = v4() + user._id;
     const subject = "Verify Your Email";
     const body = `<p>Verify your Email address to complete the signup and login into your account.</p><p>This is link <b>experies in 6 hours </b></p><p>Press 
@@ -172,7 +172,7 @@ const userVerify = async (req, res) => {
                   let message = "Link has expire. Please signup again ";
                   // res.redirect(`/user/verified/error=true&message=${message}`);
                   res.json({
-                    status:true,
+                    status:false,
                     message,
                   });
                 })
@@ -182,7 +182,7 @@ const userVerify = async (req, res) => {
                     "clearing User with expired unique strinng failed ";
                   // res.redirect(`/user/verified/error=true&message=${message}`);
                   res.json({
-                    status:true,
+                    status:false,
                     message,
                   });
                 });
@@ -193,7 +193,7 @@ const userVerify = async (req, res) => {
                 "An error occured while clearing expired user verification record!  ";
               // res.redirect(`/user/verified/error=true&message=${message}`);
               res.json({
-                status:true,
+                status:false,
                 message,
               });
             });
@@ -206,7 +206,11 @@ const userVerify = async (req, res) => {
                   .then(() => {
                     UserVerification.deleteOne({ userId })
                       .then(() => {
-                        res.status(200).json({status:"true",message:"Email verfied Successfully!"});
+                        res.send("<p style={{textAlign:'center',textSize:'18px'}}>Your Email verfied successfully!</p>")
+                        // status(200)
+                        // .json({status:"true",
+                        //   message:"Email verfied Successfully!"
+                        // });
                       })
                       .catch((error) => {
                         console.log(error);

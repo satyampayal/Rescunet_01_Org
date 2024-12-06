@@ -30,7 +30,7 @@ function App() {
       <Route path='/user/login' element={<LoginForm/>}/>
       
       {
-        isLoggedIn ?
+        isLoggedIn &&
         <Route path='/my' element={<MyProfile/>}>
         <Route index  element={<LatestCase/>}/>
         <Route  path='addcase' element={<AddCase/>}/>
@@ -38,8 +38,7 @@ function App() {
         <Route index path='mycases' element={<MyCases/>}/>
         
         </Route>
-        :
-        <Route path='*' element={<LoginForm/>} />
+      
       }
     
     <Route path='/user/verify/:userId/:uniqueString'  element={<EmailVerification/>}  />
