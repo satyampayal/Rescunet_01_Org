@@ -77,6 +77,15 @@ export const searchComplain=createAsyncThunk('/complain/search',async (searchPar
         
     }
 })
+
+export const getComplainByComplainId=createAsyncThunk('/complain/getById',async ({complainId})=>{
+       try {
+        const response =axiosInstance.get(`complain/get/${complainId}`);
+        return await response;
+       } catch (error) {
+          console.log(error)
+       }
+})
 const complainSlice=createSlice({
     name:'complain',
     initialState,
@@ -95,6 +104,12 @@ const complainSlice=createSlice({
         .addCase(searchComplain.fulfilled,(state,action)=>{
             state.loadList=false
             state.searchComplainList=action?.payload?.data?.data;
+        })
+        .addCase(getComplainByComplainId.pending,(state,action)=>{
+            state.loadList=true
+        })
+        .addCase(getComplainByComplainId.fulfilled,(state,action)=>{
+            state.loadList=false
         })
        
     }

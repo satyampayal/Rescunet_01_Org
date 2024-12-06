@@ -7,34 +7,14 @@ const MyCases = () => {
     const {myComplaints}=useSelector((state)=>state.complain)
     const dispatch=useDispatch();
     const [deleteTarget, setDeleteTarget] = useState(null);
-  const missingPersons = [
-    {
-      firstName: "John",
-      lastName: "Doe",
-      age: 25,
-      contactAddress: "123 Main Street, Cityville",
-      gender: "Male",
-      height: "5'8",
-      image: "", // Image URL if available
-    },
-    {
-      firstName: "Jane",
-      lastName: "Smith",
-      age: 30,
-      contactAddress: "456 Oak Avenue, Townsville",
-      gender: "Female",
-      height: "5'5",
-      image: "", // Image URL if available
-    },
-  ];
-  console.log(deleteTarget)
+ 
   useEffect(()=>{
     const myComplaints= async ()=>{
        await  dispatch(getAllMyComplains())
 
     }
     myComplaints();
-  },[])
+  },[dispatch])
 
   const handleEdit = (person) => {
     console.log("Edit case for:", person);
@@ -49,7 +29,6 @@ const MyCases = () => {
       postedBy:deleteTarget.postedBy,
     postId:deleteTarget._id
     }
-    console.log(data)
      const response=await dispatch(deleteMyComplain(data))
     if(response){
     setDeleteTarget(null);

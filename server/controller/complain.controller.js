@@ -278,4 +278,26 @@ const searchMissingPerson=async (req,res)=>{
       res.status(500).json({ success: false, message: "Error searching for missing persons" });
   }
 }
-export { complainRegister, getAllComplain, updateComplain, getMyComplains,deleteComplainByUser,searchMissingPerson};
+
+const getComaplinByComplainId=async (req,res)=>{
+  const {complainId}=req.params;
+  if (!complainId) {
+    return res.json({
+      success: false,
+      message: "Complain Id Not Found",
+    });
+  }
+  const complainExists = await Complain.findOne({ _id: complainId });
+  if (!complainExists) {
+    return res.status(400).json({
+      success:false,
+      message: "Complain Not found please try again",
+    });
+  }
+  return res.status(200).json({
+    success:true,
+    data:complainExists
+  })
+
+}
+export { complainRegister, getAllComplain, updateComplain, getMyComplains,deleteComplainByUser,searchMissingPerson,getComaplinByComplainId};

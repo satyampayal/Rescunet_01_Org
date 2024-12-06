@@ -7,7 +7,7 @@ const BASE_URL =
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   withCredentials: true, // Needed for cookies or session-based auth
-  timeout: 10000, // Optional, adjust as needed
+  timeout: 1000000000000, // Optional, adjust as needed
 });
 
 export default axiosInstance;

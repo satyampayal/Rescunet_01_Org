@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchComplain } from "../redux/slices/complianSlices";
+import { Link } from "react-router-dom";
 
 const SearchBar = () => {
     const { searchComplainList,loadList } = useSelector((state) => state.complain);
@@ -54,7 +55,7 @@ const SearchBar = () => {
             {  searchTerm && searchComplainList?.length  > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6  sticky  top-[30%] w-[60vw]  shadow-2xl shadow-slate-400    rounded-lg border-[1px] p-2  z-[100] mx-auto ">
                     {searchComplainList.map((person, index) => (
-                        <div
+                        <Link to={'/missing-person/'+person._id}
                             key={index}
                             className="border rounded-lg shadow-lg overflow-hidden bg-white hover:scale-95 transition-all duration-200"
                         >
@@ -91,7 +92,7 @@ const SearchBar = () => {
                                     <strong>MissingSince:</strong> {person?.missingSince}
                                 </p>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             ) : (
