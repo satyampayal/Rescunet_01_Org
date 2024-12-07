@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaPhone, FaMapMarkerAlt, FaUser, FaWeight, FaHeart, FaBrain,FaEnvelope } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getComplainByComplainId } from "../redux/slices/complianSlices";
@@ -49,6 +49,7 @@ const MissingPersonProfile = () => {
   }, [])
 
   return (
+    <div>
     <div className="min-h-screen mx-auto bg-gradient-to-br from-[#051622] via-[#1ba098] to-[#deb992]  p-5 ">
 
       <header className="bg-gray-800 py-4 px-6 w-auto">
@@ -147,6 +148,9 @@ const MissingPersonProfile = () => {
           </div>
         </div>
       </div>
+    </div>
+    <Outlet/>
+
     </div>
   );
 };

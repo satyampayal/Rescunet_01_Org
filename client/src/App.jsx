@@ -13,6 +13,8 @@ import MyCases from './Component/User/MyCases';
 import ListsOfComplains from './Component/ListsOfComplains';
 import EmailVerification from './Component/EmailVerfication';
 import MissingPersonProfile from './Component/MissingPersonProfile.jsx';
+import Footer from './Component/Footer.jsx';
+import MissingPersonForm from './Component/Complains/MissingPrsonForm.jsx';
 function App() {
   const {isLoggedIn}=useSelector((state)=>state.auth);
   const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
@@ -36,7 +38,7 @@ function App() {
         isLoggedIn &&
         <Route path='/my' element={<MyProfile/>}>
         <Route index  element={<LatestCase/>}/>
-        <Route  path='addcase' element={<AddCase/>}/>
+        <Route  path='addcase' element={<MissingPersonForm/>}/>
         <Route index path='main' element={<LatestCase/>}/>
         <Route index path='mycases' element={<MyCases/>}/>
         
@@ -45,7 +47,10 @@ function App() {
       }
     
     <Route path='/user/verify/:userId/:uniqueString'  element={<EmailVerification/>}  />
-    <Route path='/missing-person/:complainId' element={<MissingPersonProfile/>}/>
+    
+    <Route path='/missing-person/:complainId' element={<MissingPersonProfile/>}>
+    <Route index  element={<Footer/>}/>
+    </Route>
 
     <Route path='*' element={<LoginForm/>} />
 
