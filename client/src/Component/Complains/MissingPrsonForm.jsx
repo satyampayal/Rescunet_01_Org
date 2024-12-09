@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Step1 from "./AddComplain/Step1";
+import Step2 from "./AddComplain/Step2";
 
 const MissingPersonForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -53,6 +54,7 @@ const MissingPersonForm = () => {
             <form className="space-y-8">
                 {/* Render Step 1 Component */}
                 {currentStep === 1 && <Step1 />}
+                {currentStep === 2 && <Step2 />}
 
                 {/* Navigation Buttons */}
                 <div className="flex justify-between">

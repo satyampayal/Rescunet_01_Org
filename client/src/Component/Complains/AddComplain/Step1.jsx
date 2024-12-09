@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import statesAndCities from "../../statesAndCities.json"; // Import the JSON file
+import React, { useState } from "react";
 import eyeColor from "../../../constantdata/eyeColor";
 import HairColor from "../../../constantdata/HairColor";
 import GENDER from "../../../constantdata/GENDER";
@@ -11,19 +10,14 @@ const MissingPersonForm = () => {
     email: "",
     phone: "",
     connection: "",
-    state: "",
-    city: "",
   });
 
-  const [cities, setCities] = useState([]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
-    if (name === "state") {
-      setCities(statesAndCities[value] || []); // Update cities based on state
-    }
+    
   };
   const [errors, setErrors] = useState({});
   const nextStep = () => setCurrentStep((prev) => prev + 1);
@@ -238,7 +232,7 @@ const MissingPersonForm = () => {
             <div>
               <label className="block text-sm font-medium">Nationality</label>
             <select 
-            name="gender"
+            name="Nationality"
             value={formData?.nationality}
             onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
@@ -256,47 +250,7 @@ const MissingPersonForm = () => {
             
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                State *
-              </label>
-              <select
-                name="state"
-                value={formData.state}
-                onChange={handleInputChange}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                required
-              >
-                <option value="">Select State...</option>
-                {Object.keys(statesAndCities).map((state) => (
-                  <option key={state} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">
-                City *
-              </label>
-              <select
-                name="city"
-                value={formData.city}
-                onChange={handleInputChange}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-                required
-                disabled={!formData.state}
-              >
-                <option value="">Select City...</option>
-                {cities.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+         
           <div className="grid grid-cols-1 gap-6 ">
           <div>
               <label className="block text-sm font-medium text-gray-700">
