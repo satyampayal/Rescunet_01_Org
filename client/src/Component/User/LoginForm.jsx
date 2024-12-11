@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import { useHistory } from "react-router-dom"; // If you're using react-router for navigation
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginAccount } from "../../redux/slices/authSlices";
 import toast from "react-hot-toast";
@@ -108,6 +108,8 @@ const LoginForm = () => {
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password}</p>
             )}
+              <Link to={'/reset-password'} className="text-blue-500 text-sm mt-1 block text-end">forget password?</Link>
+
           </div>
 
           {/* Login Button */}

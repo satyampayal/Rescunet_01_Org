@@ -72,6 +72,39 @@ const handleSubmit = (e) => {
               </select>
             </div>
             <div>
+              <label className="block text-sm font-medium">Zip Code</label>
+              <input
+                type="text"
+                name="zipCode"
+                value={formData.zipCode}
+                onChange={handleInputChange}
+                className={`mt-1 block w-full border rounded-md px-3 py-2 border-gray-300"
+                  }`}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Region</label>
+              <input
+                type="text"
+                name="region"
+                value={formData.region}
+                onChange={handleInputChange}
+                className={`mt-1 block w-full border rounded-md px-3 py-2 border-gray-300"
+                  }`}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">Province</label>
+              <input
+                type="text"
+                name="province"
+                value={formData.province}
+                onChange={handleInputChange}
+                className={`mt-1 block w-full border rounded-md px-3 py-2 border-gray-300"
+                  }`}
+              />
+            </div>
+            <div>
               <label className="block text-sm font-medium">Nationality</label>
             <select 
             name="Nationality"

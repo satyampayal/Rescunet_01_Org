@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import Step1 from "./AddComplain/Step1";
 import Step2 from "./AddComplain/Step2";
+import Step3 from "./AddComplain/Step3";
+import Step4 from "./AddComplain/Step4";
+import Step5 from "./AddComplain/Step5";
+import Step6 from "./AddComplain/Step6";
+import LegalDisclaimer from "./AddComplain/LegalDisclaimer";
 
 const MissingPersonForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
@@ -10,9 +15,10 @@ const MissingPersonForm = () => {
         "LOCATION",
         "PHOTOS",
         "POLICE",
-        "MILITARY",
+        // "MILITARY",
         "VEHICLE",
         "SOCIAL MEDIA",
+        "Last Page"
     ];
 
     const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, steps.length));
@@ -55,6 +61,11 @@ const MissingPersonForm = () => {
                 {/* Render Step 1 Component */}
                 {currentStep === 1 && <Step1 />}
                 {currentStep === 2 && <Step2 />}
+                {currentStep === 3 && <Step3 />}
+                {currentStep === 4 && <Step4 />}
+                {currentStep === 5 && <Step5 />}
+                {currentStep === 6 && <Step6 />}
+                {currentStep === 7 && <LegalDisclaimer />}
 
                 {/* Navigation Buttons */}
                 <div className="flex justify-between">

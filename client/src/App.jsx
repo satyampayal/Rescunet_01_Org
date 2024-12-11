@@ -15,6 +15,7 @@ import EmailVerification from './Component/EmailVerfication';
 import MissingPersonProfile from './Component/MissingPersonProfile.jsx';
 import Footer from './Component/Footer.jsx';
 import MissingPersonForm from './Component/Complains/MissingPrsonForm.jsx';
+import ResetPassword from './Component/User/ResetPassword.jsx';
 function App() {
   const {isLoggedIn}=useSelector((state)=>state.auth);
   const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
@@ -33,6 +34,7 @@ function App() {
       </GoogleOAuthProvider>
       }/>
       <Route path='/user/login' element={<LoginForm/>}/>
+      <Route path='/reset-password' element={<ResetPassword/>}/>
       
       {
         isLoggedIn &&

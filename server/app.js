@@ -23,6 +23,7 @@ const app=express();
 // })
 // -------------Deployment  End ---------------------
 app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: true }));//----> for backend se from ka data lena ke liye 
 app.use(cors(
     {
     origin:[process.env.FRONTEND_URL,"https://rescunet-01-org-5.onrender.com"],

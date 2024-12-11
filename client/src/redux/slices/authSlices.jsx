@@ -57,6 +57,7 @@ export const  logoutAccount=createAsyncThunk('/auth/logout', async ()=>{
     }
 })
 
+//although this is not used 
 export const verifyEmail=createAsyncThunk('/auth/email/verify',async ({userId,uniqueString})=>{
     try {
         const response=axiosInstance.get(`user/verify/${userId}/${uniqueString}`)
@@ -73,6 +74,23 @@ export const verifyEmail=createAsyncThunk('/auth/email/verify',async ({userId,un
         
     }
 
+})
+
+// reset password
+export const resetPassword=createAsyncThunk('auth/reset',async ({email})=>{
+    try {
+        console.log(email)
+        const response=axiosInstance.post('user/reset/password',{email})
+        toast.promise(response,{
+            loading:"Wait for processing",
+            success:(data)=>{
+                return data?.data?.message
+            },
+            error:response?.message
+        })
+    } catch (error) {
+        toast.error(error?.message)
+    }
 })
 
 const authSlice=createSlice({

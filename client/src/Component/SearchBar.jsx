@@ -10,7 +10,6 @@ const SearchBar = () => {
 
     const handleSearchChange = async (e) => {
         const value = e.target.value;
-        console.log(value.split(" "));
         setSearchTerm(value.toUpperCase());
 
         // Dispatch the search action with the entered term

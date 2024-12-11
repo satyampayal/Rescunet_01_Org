@@ -328,11 +328,12 @@ const resetPassword = async (req, res) => {
       message: "Input Fileds are empty,please fill ",
     });
   }
+  console.log(email)
   User.findOne({ email })
     .then(async (result) => {
       if (result.verified) {
         const uniqueString = v4() + result._id;
-        const cureentUrl = "http://localhost:3000/";
+        const cureentUrl = "https://rescunet-01-org-4.onrender.com/";
         const subject = "Reset your password";
         const body = `<h1>Reset Your Password</h1>
                   <p>we heared that you loast the password 
@@ -353,7 +354,7 @@ const resetPassword = async (req, res) => {
           });
 
           await newUserVerification.save();
-          return res.json({
+          return res.send({
             status: "pending",
             message: "Email is sent for reset password",
             body
@@ -361,13 +362,13 @@ const resetPassword = async (req, res) => {
         } else {
           return res.json({
             status: "Failed",
-            message: "Email not sent due to some reseon" + response,
+            message: "Email not sent due to some reason" + response,
           });
         }
       } else {
         return res.json({
           status: "failed",
-          message: "You are not verfiy as real user yet pleaes verify email",
+          message: "You are not verfiy yet, please verify  your email",
         });
       }
     })
@@ -375,29 +376,103 @@ const resetPassword = async (req, res) => {
       console.log(error);
       res.json({
         status: "Failed",
-        message: "An error to find email of user ",
+        message: "email not register  ",
       });
     });
 };
 
+const getReSetPasswordPage=async (req,res)=>{
+
+  res.send(`
+      <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="https://cdn.tailwindcss.com"></script>
+      <title>Password Form</title>
+      <style>
+        body {
+          background: linear-gradient(to bottom right, #4f46e5, #06b6d4);
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h1 class="text-2xl font-bold text-center mb-6 text-gray-700">Set Your Password</h1>
+        <form  method="POST">
+          <div class="mb-4">
+            <label for="password" class="block text-gray-600 font-medium mb-2">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="confirmPassword" class="block text-gray-600 font-medium mb-2">Confirm Password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+          >
+            Submit
+          </button>
+        </form>
+      </div>
+    </body>
+    </html>
+    `)
+}
 const verifyResetPassword = async (req, res) => {
   const { userId, uniqueString } = req.params;
-  const {password}=req.body;
-
+  const {password,confirmPassword}=req.body;
+  if(password !==confirmPassword){
+    return res.send(`
+      <div style="text-align: center; margin-top: 20px; font-family: Arial;">
+        <h1 style="color: red;">Passwords do not match!</h1>
+        <a href="https://rescunet-01-org-5.onrender.com/" style="color: blue; text-decoration: underline;">Go Back</a>
+      </div>
+    `);
+  }
+  console.log(password+"UserID "+userId)
   const newUserVerification = await UserVerification.findOne({ userId });
   // console.log(newUserVerification)
   if (!newUserVerification) {
-    let message = " User already used the lin and reset the password and link is expired  ";
-    return res.send(`<h1>${message}</h1>`);
+    let message = " User already used this link  and link is expired  ";
+    return res.send(`  <div style="text-align: center; margin-top: 20px; font-family: Arial;">
+      <h1 style="color: green;">${message}</h1>
+      <a href="https://rescunet-01-org-5.onrender.com/" style="color: blue; text-decoration: underline;">Go Back</a>
+    </div>`);
   }else if(  !bcrypt.compare(uniqueString,newUserVerification.uniqueString)){
     let message = " link are inValid   ";
-    return res.send(`<h1>${message}</h1>`);
+    return res.send(`  <div style="text-align: center; margin-top: 20px; font-family: Arial;">
+      <h1 style="color: green;">${message}</h1>
+      <a href="https://rescunet-01-org-5.onrender.com/" style="color: blue; text-decoration: underline;">Go Back</a>
+    </div>`);
   }
   else  if (newUserVerification.expiresAt< Date.now()) {
         // delete the reset Token 
         await UserVerification.deleteOne({userId})
     let message = "Link is expire ";
-    return res.send(`<h1>${message}</h1>`);
+    return res.send(`  <div style="text-align: center; margin-top: 20px; font-family: Arial;">
+      <h1 style="color: green;">${message}</h1>
+      <a href="https://rescunet-01-org-5.onrender.com/" style="color: blue; text-decoration: underline;">Go Back</a>
+    </div>`);
   }
   else {
     const user= await User.findOne({_id:userId})
@@ -412,7 +487,10 @@ const verifyResetPassword = async (req, res) => {
     // now delete the record from verifyModel
     await UserVerification.deleteOne({userId})
     let message = "Password is reset succesffuly ";
-    return res.send(`<h1>${message}</h1>`);
+    return res.send(`  <div style="text-align: center; margin-top: 20px; font-family: Arial;">
+      <h1 style="color: green;">${message}</h1>
+      <a href="https://rescunet-01-org-5.onrender.com/" style="color: blue; text-decoration: underline;">Go Back</a>
+    </div>`);
 
   }
 };
@@ -425,4 +503,4 @@ const logout=async (req,res)=>{
    })
 }
 
-export { register, userVerify, login, resetPassword, verifyResetPassword,logout };
+export { register, userVerify, login, resetPassword, verifyResetPassword,logout,getReSetPasswordPage };
