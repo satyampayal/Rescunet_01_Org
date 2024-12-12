@@ -80,7 +80,7 @@ const HomePage = () => {
 
                         {/* About Us Dropdown */}
                         <div
-                            className="relative group"
+                            className="relative group z-10 "
                             onMouseEnter={() => toggleDropdown("about")}
                             onMouseLeave={() => toggleDropdown("")}
                         >
@@ -89,7 +89,7 @@ const HomePage = () => {
                             </button>
                             {activeDropdown === "about" && (
                                 <div
-                                    className="md:absolute relative mt-2 bg-gray-800 text-white rounded-lg shadow-lg "
+                                    className="md:absolute relative mt-2 bg-gray-800 text-white rounded-lg shadow-lg w-[200%] text-sm"
                                     onMouseEnter={() => toggleDropdown("about")}
                                     onMouseLeave={() => toggleDropdown("")}
                                 >
@@ -123,7 +123,7 @@ const HomePage = () => {
                             </button>
                             {activeDropdown === "support" && (
                                 <div
-                                    className="md:absolute relative  mt-2 bg-gray-800 text-white rounded-lg shadow-lg"
+                                    className="md:absolute relative  mt-2 bg-gray-800 text-white rounded-lg shadow-lg  text-sm w-[200%]"
                                     onMouseEnter={() => toggleDropdown("support")}
                                     onMouseLeave={() => toggleDropdown("")}
                                 >
@@ -154,7 +154,7 @@ const HomePage = () => {
                             </button>
                             {activeDropdown === "missing" && (
                                 <div
-                                    className="md:absolute relative  mt-2 bg-gray-800 text-white rounded-lg shadow-lg"
+                                    className="md:absolute relative  mt-2 bg-gray-800 text-white rounded-lg shadow-lg w-[200%] text-sm right-0"
                                     onMouseEnter={() => toggleDropdown("missing")}
                                     onMouseLeave={() => toggleDropdown("")}
                                 >

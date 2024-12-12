@@ -139,6 +139,9 @@ const complainSchema=new Schema({
     otherEmail:{
         type:String,
     },
+},
+{
+    timestamps:true,
 })
 
 const Complain=mongoose.model("Complaints",complainSchema)
