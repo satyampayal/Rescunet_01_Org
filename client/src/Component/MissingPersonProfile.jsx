@@ -36,6 +36,7 @@ const MissingPersonProfile = () => {
   const [complainData, setComplaindata] = useState([]);
   const [selectImage,setSelectImage]=useState(0);
   useEffect(() => {
+    window.screen(0,0)
     const getResult = async () => {
       const response = await dispatch(getComplainByComplainId({ complainId }))
       if (response?.payload?.data?.success) {

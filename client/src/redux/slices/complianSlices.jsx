@@ -43,8 +43,16 @@ export const getAllComplains=createAsyncThunk('/complain/get',async ()=>{
 export const getAllMyComplains=createAsyncThunk('/complain/get/my',async ()=>{
     try {
         const response=axiosInstance.get('complain/get/my');
+        toast.promise(response,{
+            loading:"fetching your complains ",
+            success:(data)=>{
+                return data?.data?.message
+            },
+            error:'try again'
+        })
         return await response;
     } catch (error) {
+        toast.error(error?.message)
         console.log(error?.message)
         
     }
