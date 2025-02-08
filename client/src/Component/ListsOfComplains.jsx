@@ -30,7 +30,7 @@ const ListsOfComplains = () => {
         </div>
       }
       {complainsList? complainsList.map((person) => (
-        <div
+        <div  key={person._id}
           className={` w-64 p-4 border rounded-lg shadow-lg transition-all  duration-600   hover:scale-[1.02]  hover:border-balck hover:border-[5px]
           `}
         >

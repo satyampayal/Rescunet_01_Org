@@ -1,157 +1,139 @@
 import React, { useEffect, useState } from "react";
-import { FaPhone, FaMapMarkerAlt, FaUser, FaWeight, FaHeart, FaBrain,FaEnvelope } from "react-icons/fa";
+import { FaPhone, FaMapMarkerAlt, FaUser, FaWeight, FaHeart, FaBrain, FaEnvelope } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
 import { Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getComplainByComplainId } from "../redux/slices/complianSlices";
+import CaseShareWithSocial from "../ShareHandle/CaseShareWithSocial";
+
 const MissingPersonProfile = () => {
   const dispatch = useDispatch();
-  const { loadList } = useSelector((state) => state.complain)
+  const { loadList } = useSelector((state) => state.complain);
   const { complainId } = useParams();
-  let missingPerson = {
-    firstName: "Jane",
-    lastName: "Doe",
-    age: 55,
-    contactAddress: "1234 Elm Street, New York, NY",
-    missingSince: "Dec 1, 2024",
-    gender: "Female",
-    weight: "140 lbs",
-    health: "Good",
-    mentalHealth: "Stable",
-    missingFrom: "Central Park, NYC",
-    status: "Active",
-    nationality: "American",
-    ethnicity: "Caucasian",
-    hair: "Blonde",
-    eyes: "Brown",
-    height: "5' 3\"",
-    images: [
-      "https://via.placeholder.com/150", // Main image
-      "https://via.placeholder.com/100",
-      "https://via.placeholder.com/100",
-      "https://via.placeholder.com/100",
-    ],
-  };
-  const [complainData, setComplaindata] = useState([]);
-  const [selectImage,setSelectImage]=useState(0);
+  
+  const [complainData, setComplaindata] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(0);
+
   useEffect(() => {
-    window.screen(0,0)
-    const getResult = async () => {
-      const response = await dispatch(getComplainByComplainId({ complainId }))
+    const fetchData = async () => {
+      const response = await dispatch(getComplainByComplainId({ complainId }));
       if (response?.payload?.data?.success) {
-        missingPerson = response?.payload?.data?.data;
-        setComplaindata(missingPerson);
-
+        setComplaindata(response?.payload?.data?.data);
       }
+    };
+    fetchData();
+  }, [complainId, dispatch]);
 
-    }
-    getResult();
-  }, [])
+  if (loadList) {
+    return (
+      <div className="flex justify-center items-center min-h-screen bg-gray-900">
+        <div className="w-10 h-10 border-4 border-green-500 rounded-full border-t-transparent animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!complainData) {
+    return (
+      <div className="text-center text-gray-300 min-h-screen flex justify-center items-center">
+        <p className="text-lg">No missing person details available.</p>
+      </div>
+    );
+  }
+
+  const {
+    firstName,
+    lastName,
+    age,
+    gender,
+    contactAddress,
+    missingSince,
+    weight,
+    health,
+    meantalHealth,
+    missingFrom,
+    status,
+    nationality,
+    ethnicity,
+    hairColor,
+    eyes,
+    height,
+    images = [],
+    otherEmail,
+    _id
+  } = complainData;
 
   return (
-    <div>
-    <div className="min-h-screen mx-auto bg-gradient-to-br from-[#051622] via-[#1ba098] to-[#deb992]  p-5 ">
-
-      <header className="bg-gray-800 py-4 px-6 w-auto">
-        <Link to={'/'} className="flex gap-0 justify-start  items-center text-white "> <IoIosArrowBack size={40} color="white" /> Back</Link>
-        {/* <h1 className="text-2xl font-bold">Good to see you, <span className="text-green-400"> {userData?.firstName} {userData?.lastName} </span>  </h1> */}
-        {/* <p className="text-sm mt-2">You're currently logged in.</p> */}
+    <div className="min-h-screen bg-gradient-to-br from-[#051622] via-[#1ba098] to-[#deb992] p-6">
+      {/* Header */}
+      <header className="bg-gray-800 py-4 px-6 text-white">
+        <Link to="/" className="flex items-center gap-2 hover:text-gray-400">
+          <IoIosArrowBack size={30} />
+          <span>Back</span>
+        </Link>
       </header>
-      {
-        loadList && <div className="flex justify-center items-center  ">
-          <div className="w-8 h-8 border-4 border-green-500 border-solid rounded-full border-t-transparent animate-spin"></div>
-        </div>
-      }
-      <div className="  max-w-[4xl]  rounded-lg shadow-lg overflow-hidden ">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-purple-600 to-blue-500 text-white p-6">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="md:text-3xl text-[24px] font-bold">
-                {complainData?.firstName} {complainData?.lastName}
-              </h1>
-              <p className=" text-sm md:text-lg">Missing since: {complainData?.missingSince}</p>
-            </div>
-            <div className="bg-green-500 text-sm font-semibold py-1 px-3 rounded-full">
-              {missingPerson?.status}
-            </div>
+
+      <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden mt-6">
+        {/* Profile Header */}
+        <div className="bg-gradient-to-r from-purple-600 to-blue-500 text-white p-6 flex justify-between items-center">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold">{firstName} {lastName}</h1>
+            <p className="text-sm md:text-lg">Missing since: {missingSince}</p>
+          </div>
+          <div className="bg-green-500 text-sm font-semibold py-1 px-3 rounded-full">
+            {status || "Unknown"}
           </div>
         </div>
 
-        {/* Body */}
-        <div className="flex flex-col md:flex-row p-6 gap-6 bg-white">
+        {/* Profile Details */}
+        <div className="p-6 flex flex-col md:flex-row gap-6">
           {/* Left Column: Images */}
-          <div className="w-full md:w-1/2">
-            <div className="mb-4">
+          <div className="md:w-1/2">
+            <div className="relative">
               <img
-                src={complainData?.images?.length > 0 ? complainData?.images[selectImage]?.secure_url : ""}
-                alt={`${complainData?.firstName} ${complainData?.lastName}`}
-                className="w-full h-64  object-fit rounded-lg"
+                src={images[selectedImage]?.secure_url || "https://via.placeholder.com/150"}
+                alt={firstName}
+                className="w-full h-64 object-cover rounded-lg shadow-lg transition-all duration-300"
               />
             </div>
-            <div className="flex gap-2">
-              {complainData?.images?.map((image, index) => (
+            {/* Image Thumbnails */}
+            <div className="flex gap-2 mt-3">
+              {images.map((image, index) => (
                 <img
-                onClick={()=>setSelectImage(index)}
                   key={index}
                   src={image?.secure_url}
-                  alt={`Additional ${index}`}
-                  className="w-20 h-20 object-cover rounded-lg"
+                  alt={`Image ${index + 1}`}
+                  className={`w-16 h-16 object-cover rounded-lg cursor-pointer transition-all duration-200 ${
+                    index === selectedImage ? "border-2 border-blue-500 scale-105" : "opacity-80"
+                  }`}
+                  onClick={() => setSelectedImage(index)}
                 />
               ))}
             </div>
           </div>
 
           {/* Right Column: Details */}
-          <div className="w-full md:w-1/2">
-            <h2 className="text-2xl font-semibold mb-4">Details</h2>
-            <ul className="space-y-4 text-gray-700">
-              <li className="flex items-center">
-                <FaUser className="text-purple-600 mr-3" />
-                {complainData?.gender}, {complainData?.age} years old
-              </li>
-              <li className="flex items-center">
-                <FaMapMarkerAlt className="text-purple-600 mr-3" />
-                {complainData?.Nationality}, {complainData?.ethnicity}
-              </li>
-              <li className="flex items-center">
-                <FaWeight className="text-purple-600 mr-3" />
-                Weight: {complainData?.weight || "not specified"}
-              </li>
-              <li className="flex items-center">
-                <FaHeart className="text-purple-600 mr-3" />
-                Health: {complainData?.health}
-              </li>
-              <li className="flex items-center">
-                <FaBrain className="text-purple-600 mr-3" />
-                Mental Health: {complainData?.meantalHealth}
-              </li>
-              <li className="flex items-center">
-                <FaUser className="text-purple-600 mr-3" />
-                Hair: {complainData?.hairColor || "not know"}, Eyes: {complainData?.eyes || "not know"}
-              </li>
-              <li className="flex items-center">
-                <FaUser className="text-purple-600 mr-3" />
-                Height: {complainData?.height || "not know"}
-              </li>
-             
-              <li className="flex items-center">
-                <FaPhone className="text-purple-600 mr-3" />
-                Contact: {complainData?.contactAddress || "Not declare"}
-              </li>
-              <li className="flex items-center ">
-                <FaEnvelope  className="text-purple-600 mr-3" />
-                Email: {complainData?.otherEmail || "Not declare"}
-              </li>
-              
+          <div className="md:w-1/2 space-y-4">
+            <h2 className="text-xl font-semibold border-b pb-2">Details</h2>
+            <ul className="space-y-3 text-gray-700">
+              <li className="flex items-center"><FaUser className="text-purple-600 mr-3" /> {gender}, {age} years old</li>
+              <li className="flex items-center"><FaMapMarkerAlt className="text-purple-600 mr-3" /> {nationality}, {ethnicity}</li>
+              <li className="flex items-center"><FaWeight className="text-purple-600 mr-3" /> Weight: {weight || "Not specified"}</li>
+              <li className="flex items-center"><FaHeart className="text-purple-600 mr-3" /> Health: {health || "Unknown"}</li>
+              <li className="flex items-center"><FaBrain className="text-purple-600 mr-3" /> Mental Health: {meantalHealth || "Not declared"}</li>
+              <li className="flex items-center"><FaUser className="text-purple-600 mr-3" /> Hair: {hairColor || "Unknown"}, Eyes: {eyes || "Unknown"}</li>
+              <li className="flex items-center"><FaUser className="text-purple-600 mr-3" /> Height: {height || "Unknown"}</li>
+              <li className="flex items-center"><FaPhone className="text-purple-600 mr-3" /> Contact: {contactAddress || "Not provided"}</li>
+              <li className="flex items-center"><FaEnvelope className="text-purple-600 mr-3" /> Email: {otherEmail || "Not provided"}</li>
             </ul>
           </div>
         </div>
-      </div>
-    </div>
-    <Outlet/>
 
+        {/* Social Media Share Section */}
+        {_id ? <CaseShareWithSocial caseData={complainData} /> : null}
+      </div>
+
+      <Outlet />
     </div>
   );
 };
