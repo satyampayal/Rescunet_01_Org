@@ -5,6 +5,9 @@ import bodyParser from 'body-parser'
 import complainRoute from './Routes/complain.route.js';
 import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
+import shareRouter from './Routes/share.routes.js';
+import http from "http";
+import { Server } from "socket.io";
 // import path for make depolyement easy--- start
 // import path from 'path';
 // import { fileURLToPath } from "url";
@@ -23,16 +26,46 @@ const app=express();
 // })
 // -------------Deployment  End ---------------------
 app.use(express.json())
-app.use(bodyParser.urlencoded({ extended: true }));//----> for backend se from ka data lena ke liye 
 app.use(cors(
     {
     origin:[process.env.FRONTEND_URL,"https://rescunet-01-org-5.onrender.com"],
     credentials:true,
 } 
 ));
+
+const server = http.createServer(app); // Create HTTP server
+const io = new Server(server, {
+  cors: {
+    origin:[process.env.FRONTEND_URL,"https://rescunet-01-org-5.onrender.com"],
+    methods: ["GET", "POST"],
+    credentials: true 
+
+  },
+});
+app.use(bodyParser.urlencoded({ extended: true }));//----> for backend se from ka data lena ke liye 
+
+// Socket.io connection
+io.on("connection", (socket) => {
+    console.log("User Connected:", socket.id);
+       // Listen for a new case being reported
+       socket.on("new-case-reported", (caseData) => {
+        console.log("New case reported:", caseData);
+        io.emit("new-case", caseData); // Broadcast to all connected users
+    });
+  
+    socket.on("disconnect", () => {
+      console.log("User Disconnected:", socket.id);
+    });
+  });
+
+  // Store the Socket.io instance in `app`
+app.set("io", io);
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use('/user',userRoute)
 app.use('/complain',complainRoute)
-
+app.use('/share',shareRouter)
+server.listen(3000, () => {
+    console.log("🚀 Server running on http://localhost:3001");
+  });
 export default app;

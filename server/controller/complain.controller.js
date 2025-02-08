@@ -154,6 +154,7 @@ const getMyComplains=async (req,res)=>{
   console.log(id+" User id ");
   try {
     const response = await Complain.find({postedBy:id});
+  req.app.get("io").emit("new-case", response);
     return res.json({
       status: "Success",
       message: "Get My Complaints",

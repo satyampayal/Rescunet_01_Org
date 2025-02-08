@@ -12,8 +12,8 @@ v2.config({
     api_secret:process.env.CLOUDINARY_API_SECRET,
 
 });
-app.listen(PORT,(e)=>{
-    if(e){
-        console.log("Not Coonected"+e)
-    }else console.log("Server is Run on "+PORT)
-})
+// app.listen(PORT,(e)=>{
+//     if(e){
+//         console.log("Not Coonected"+e)
+//     }else console.log("Server is Run on "+PORT)
+// })
