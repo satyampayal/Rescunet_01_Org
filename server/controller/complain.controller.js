@@ -151,6 +151,7 @@ const getAllComplain = async (req, res) => {
 //get My All cases
 const getMyComplains=async (req,res)=>{
   const {id}=req.user;
+  console.log(id);
   try {
     const response = await Complain.find({postedBy:id});
     return res.json({
