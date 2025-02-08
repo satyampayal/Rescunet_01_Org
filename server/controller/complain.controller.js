@@ -135,6 +135,8 @@ const complainRegister = async (req, res) => {
 const getAllComplain = async (req, res) => {
   try {
     const response = await Complain.find({});
+  req.app.get("io").emit("new-case", response[0]);
+
     return res.json({
       status: "Success",
       Message: "Get All Complaints",
@@ -154,7 +156,7 @@ const getMyComplains=async (req,res)=>{
   console.log(id+" User id ");
   try {
     const response = await Complain.find({postedBy:id});
-  req.app.get("io").emit("new-case", response);
+  // req.app.get("io").emit("new-case", response);
     return res.json({
       status: "Success",
       message: "Get My Complaints",
