@@ -8,6 +8,17 @@ import { config } from 'dotenv';
 import shareRouter from './Routes/share.routes.js';
 import http from "http";
 import { Server } from "socket.io";
+import connectedToDb from "./Config/dbConnection.js";
+import {v2} from 'cloudinary'
+const PORT=3000;
+
+connectedToDb();
+v2.config({
+    cloud_name:process.env.CLOUDINARY_NAME,
+    api_key:process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_API_SECRET,
+
+});
 // import path for make depolyement easy--- start
 // import path from 'path';
 // import { fileURLToPath } from "url";
@@ -66,6 +77,6 @@ app.use('/user',userRoute)
 app.use('/complain',complainRoute)
 app.use('/share',shareRouter)
 server.listen(3000, () => {
-    console.log("🚀 Server running on http://localhost:3001");
+    console.log("🚀 Server running on http://localhost:3000");
   });
 export default app;
