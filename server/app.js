@@ -37,7 +37,7 @@ app.use(cors(
 const server = http.createServer(app); // Create HTTP server
 const io = new Server(server, {
   cors: {
-    origin:[process.env.FRONTEND_URL,"https://rescunet-01-org-5.onrender.com"],
+    origin:["https://rescunet-01-org-5.onrender.com",process.env.FRONTEND_URL],
     methods: ["GET", "POST"],
     credentials: true 
 
@@ -50,9 +50,15 @@ io.on("connection", (socket) => {
     console.log("User Connected:", socket.id);
        // Listen for a new case being reported
        socket.on("new-case-reported", (caseData) => {
-        console.log("New case reported:", caseData);
+        console.log("New case reported:"+caseData);
         io.emit("new-case", caseData); // Broadcast to all connected users
+
+        
     });
+    socket.on("get-case-particular",(caseData)=>{
+      console.log("Get case Particluar "+caseData);
+      io.emit("get-case-particular",caseData);
+    })
   
     socket.on("disconnect", () => {
       console.log("User Disconnected:", socket.id);

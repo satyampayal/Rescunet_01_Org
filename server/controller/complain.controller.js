@@ -135,6 +135,7 @@ const complainRegister = async (req, res) => {
 const getAllComplain = async (req, res) => {
   try {
     const response = await Complain.find({});
+    
   req.app.get("io").emit("new-case", response[0]);
 
     return res.json({
@@ -298,6 +299,7 @@ const getComaplinByComplainId=async (req,res)=>{
       message: "Complain Not found please try again",
     });
   }
+  req.app.get("io").emit("get-case-particular",complainExists);
   return res.status(200).json({
     success:true,
     data:complainExists

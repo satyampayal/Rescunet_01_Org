@@ -17,14 +17,12 @@ import Footer from './Component/Footer.jsx';
 import MissingPersonForm from './Component/Complains/MissingPrsonForm.jsx';
 import ResetPassword from './Component/User/ResetPassword.jsx';
 import FaceDetection from './Component/User/FaceDetection.jsx';
-import { useSocket } from './useSocket.js';
 
 function App() {
   const {isLoggedIn}=useSelector((state)=>state.auth);
   const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com";
 
  
-  useSocket();
   
   return (
     <Routes >

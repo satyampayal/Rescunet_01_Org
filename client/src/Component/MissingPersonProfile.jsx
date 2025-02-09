@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getComplainByComplainId } from "../redux/slices/complianSlices";
 import CaseShareWithSocial from "../ShareHandle/CaseShareWithSocial";
+import { io } from "socket.io-client";
+import toast from "react-hot-toast";
 
+const socket = io("http://localhost:3000"); // Connect to backend
 const MissingPersonProfile = () => {
   const dispatch = useDispatch();
   const { loadList } = useSelector((state) => state.complain);
@@ -20,9 +23,25 @@ const MissingPersonProfile = () => {
       const response = await dispatch(getComplainByComplainId({ complainId }));
       if (response?.payload?.data?.success) {
         setComplaindata(response?.payload?.data?.data);
+        
       }
     };
     fetchData();
+      // Listen for "get-case-particular" event from server
+      socket.emit("get-case-particular", complainData);
+      socket.off("get-case-particular"); // Cleanup on unmount
+
+      socket.on("get-case-particular",(complainData)=>{
+        toast.success("case details recieved of "+complainData.firstName,{
+          position: "top-right",
+          duration: 5000,
+    
+        })
+      })
+
+    return () => {
+      socket.off("get-case-particular"); // Cleanup on unmount
+    };
   }, [complainId, dispatch]);
 
   if (loadList) {
