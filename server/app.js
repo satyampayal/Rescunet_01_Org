@@ -66,7 +66,11 @@ app.use(bodyParser.json())
 app.use('/user',userRoute)
 app.use('/complain',complainRoute)
 app.use('/share',shareRouter)
-server.listen(3000, () => {
+server.listen(3000, (e) => {
+  if(e){
+    console.log("Serevr not run ")
+    process.exit()
+  }
     console.log("🚀 Server running on http://localhost:3000");
   });
 export default server;
