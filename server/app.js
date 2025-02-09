@@ -8,6 +8,7 @@ import { config } from 'dotenv';
 import shareRouter from './Routes/share.routes.js';
 import http from "http";
 import { Server } from "socket.io";
+import commentRoute from './Routes/comment.route.js';
 
 // import path for make depolyement easy--- start
 // import path from 'path';
@@ -59,6 +60,10 @@ io.on("connection", (socket) => {
       console.log("Get case Particluar "+caseData);
       io.emit("get-case-particular",caseData);
     })
+    socket.on("new-comment",(commentData)=>{
+      console.log("New Comment Added"+commentData);
+      io.emit("new-comment",commentData);
+    })
   
     socket.on("disconnect", () => {
       console.log("User Disconnected:", socket.id);
@@ -72,6 +77,7 @@ app.use(bodyParser.json())
 app.use('/user',userRoute)
 app.use('/complain',complainRoute)
 app.use('/share',shareRouter)
+app.use('/comment',commentRoute)
 server.listen(3000, (e) => {
   if(e){
     console.log("Serevr not run ")

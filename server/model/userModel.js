@@ -20,6 +20,7 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
+    Select:false
   },
   dob:{
     type:String,

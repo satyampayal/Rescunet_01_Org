@@ -8,6 +8,7 @@ import { getComplainByComplainId } from "../redux/slices/complianSlices";
 import CaseShareWithSocial from "../ShareHandle/CaseShareWithSocial";
 import { io } from "socket.io-client";
 import toast from "react-hot-toast";
+import CommentSection from "./CommentSection";
 const SOCKET_URL =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3000"
@@ -35,7 +36,7 @@ const MissingPersonProfile = () => {
       socket.off("get-case-particular"); // Cleanup on unmount
 
       socket.on("get-case-particular",(complainData)=>{
-        toast.success("case details recieved of "+complainData.firstName,{
+        toast.success("case details recieved of "+complainData?.firstName,{
           position: "top-right",
           duration: 5000,
     
@@ -153,6 +154,8 @@ const MissingPersonProfile = () => {
 
         {/* Social Media Share Section */}
         {_id ? <CaseShareWithSocial caseData={complainData} /> : null}
+      {_id ? <CommentSection caseId={_id} /> : null}
+
       </div>
 
       <Outlet />
