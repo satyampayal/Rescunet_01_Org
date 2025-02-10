@@ -7,13 +7,13 @@ import { useParams } from "react-router-dom";
 import { getComplainByComplainId } from "../redux/slices/complianSlices";
 import CaseShareWithSocial from "../ShareHandle/CaseShareWithSocial";
 import { io } from "socket.io-client";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import CommentSection from "./CommentSection";
-const SOCKET_URL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://rescunet-01-org-4.onrender.com";
-const socket = io(SOCKET_URL); // Connect to backend
+// const SOCKET_URL =
+//   process.env.NODE_ENV === "development"
+//     ? "http://localhost:3000"
+//     : "https://rescunet-01-org-4.onrender.com";
+// const socket = io(SOCKET_URL); // Connect to backend
 const MissingPersonProfile = () => {
   const dispatch = useDispatch();
   const { loadList } = useSelector((state) => state.complain);
@@ -32,20 +32,20 @@ const MissingPersonProfile = () => {
     };
     fetchData();
       // Listen for "get-case-particular" event from server
-      socket.emit("get-case-particular", complainData);
-      socket.off("get-case-particular"); // Cleanup on unmount
+    //   socket.emit("get-case-particular", complainData);
+    //   socket.off("get-case-particular"); // Cleanup on unmount
 
-      socket.on("get-case-particular",(complainData)=>{
-        toast.success("case details recieved of "+complainData?.firstName,{
-          position: "top-right",
-          duration: 500,
+    //   socket.on("get-case-particular",(complainData)=>{
+    //     toast.success("case details recieved of "+complainData?.firstName,{
+    //       position: "top-right",
+    //       duration: 500,
     
-        })
-      })
+    //     })
+    //   })
 
-    return () => {
-      socket.off("get-case-particular"); // Cleanup on unmount
-    };
+    // return () => {
+    //   socket.off("get-case-particular"); // Cleanup on unmount
+    // };
   }, [complainId, dispatch]);
 
   if (loadList) {

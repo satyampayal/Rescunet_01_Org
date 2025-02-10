@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../config/axiosIns";
 import toast from "react-hot-toast";
-
 let initialState={
     complainsList:[],
     myComplaints:[],

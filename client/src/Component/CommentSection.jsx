@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCommentsOfCase, postComment } from "../redux/slices/commentSlice";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
-
 const SOCKET_URL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : "https://rescunet-01-org-4.onrender.com";
+    process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://rescunet-01-org-4.onrender.com";
 const socket = io(SOCKET_URL); // Connect to backend
 const CommentSection = ({ caseId, userId }) => {
+    const { isLoggedIn } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const { commentList, loading } = useSelector((state) => {
         return state?.comment || {}; // Ensuring default value
@@ -21,13 +21,13 @@ const CommentSection = ({ caseId, userId }) => {
             dispatch(getCommentsOfCase({ caseId }));
         }
 
-        socket.on("new-comment",(commentData)=>{
-            dispatch(getCommentsOfCase({caseId}))
+        socket.on("new-comment", (commentData) => {
+            dispatch(getCommentsOfCase({ caseId }))
         })
         return () => {
             socket.off("new-comment");
-          };
-    }, [dispatch,caseId]);
+        };
+    }, [dispatch, caseId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -37,16 +37,21 @@ const CommentSection = ({ caseId, userId }) => {
             caseId,
             comment: commentText,
         };
+   console.log(isLoggedIn)
+   if(!isLoggedIn) {
+    toast.error("Please login to add comment!")
+    return ;
+}
+            try {
+                await dispatch(postComment(newComment));
+                toast.success("Comment added successfully!");
+                socket.emit("new-comment", newComment);
 
-        try {
-            await dispatch(postComment(newComment));
-            toast.success("Comment added successfully!");
-            socket.emit("new-comment",newComment);
-
-            setCommentText(""); // Clear input
-        } catch (error) {
-            toast.error("Failed to add comment!");
-        }
+                setCommentText(""); // Clear input
+            } catch (error) {
+                toast.error("Failed to add comment!");
+            }
+       
     };
 
     return (
@@ -58,7 +63,7 @@ const CommentSection = ({ caseId, userId }) => {
 
             {/* Display comments */}
             {
-                commentList?.length===0 &&<p className="p-3 text-xl text-gray-500">You are the first to comment</p>
+                commentList?.length === 0 && <p className="p-3 text-xl text-gray-500">You are the first to comment</p>
             }
             <div className="space-y-3">
                 {commentList?.map((comment) => (
