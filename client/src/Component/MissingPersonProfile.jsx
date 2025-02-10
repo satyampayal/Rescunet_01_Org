@@ -26,6 +26,7 @@ const MissingPersonProfile = () => {
     const fetchData = async () => {
       const response = await dispatch(getComplainByComplainId({ complainId }));
       if (response?.payload?.data?.success) {
+        console.log(response?.payload)
         setComplaindata(response?.payload?.data?.data);
         
       }
@@ -47,7 +48,7 @@ const MissingPersonProfile = () => {
     //   socket.off("get-case-particular"); // Cleanup on unmount
     // };
   }, [complainId, dispatch]);
-
+  console.log(complainData)
   if (loadList) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-gray-900">
@@ -154,7 +155,7 @@ const MissingPersonProfile = () => {
 
         {/* Social Media Share Section */}
         {_id ? <CaseShareWithSocial caseData={complainData} /> : null}
-      {_id ? <CommentSection caseId={_id} /> : null}
+      {_id ? <CommentSection caseId={complainData._id} /> : null}
 
       </div>
 
