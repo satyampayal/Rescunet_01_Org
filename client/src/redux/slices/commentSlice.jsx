@@ -20,6 +20,7 @@ export const  postComment=createAsyncThunk('/comment/add',async (data)=>{
 
 export const getCommentsOfCase=createAsyncThunk('/comment/get',async (data)=>{
     try {
+        console.log(data)
         const response=axiosInstance.get(`comment/get/${data?.caseId}`);
         return await response;
 

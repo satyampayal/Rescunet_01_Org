@@ -38,7 +38,7 @@ const MissingPersonProfile = () => {
       socket.on("get-case-particular",(complainData)=>{
         toast.success("case details recieved of "+complainData?.firstName,{
           position: "top-right",
-          duration: 5000,
+          duration: 500,
     
         })
       })

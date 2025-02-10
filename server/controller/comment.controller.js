@@ -26,10 +26,10 @@ const  addComment=async (req,res)=>{
 }
 
 const getCommentsOfCase=async (req,res)=>{
-    const id=req.user.id;
-     if(!id){
-        return res.status(400).json({success:false,message:"Unauthorised user "})
-     }
+    // const id=req.user.id;
+    //  if(!id){
+    //     return res.status(400).json({success:false,message:"Unauthorised user "})
+    //  }
      const {caseId}=req.params;
      if(!caseId){
         return res.status(400).json({success:false,message:"wrong url send "})
