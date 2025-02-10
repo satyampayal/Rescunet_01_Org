@@ -124,12 +124,13 @@ const deleteComment=async (req,res)=>{
             return res.status(400).json({success:false,message:"Wrong url send"})
         }
       
-        const commentExists=await Comment.findByIdAndDelete({_id:commentId})
-        if(commentExists){
-            return  res.staus(400).json({success:false,message:"Comment  not deleted ,try again"})
-        }
+ Comment.findByIdAndDelete({_id:commentId})
+.then((data)=>{
+    res.status(200).json({success:true,message:"Comment edit successfully",data:data})
+
+})
+        
        
-        res.status(200).json({success:true,message:"Comment edit successfully",data:commentExists})
     }catch(error){
         console.log(error+"Error in edit comment");
         res.status(500).json({success:false,message:"Error in delete comment "})

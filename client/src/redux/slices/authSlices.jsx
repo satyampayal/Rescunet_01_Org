@@ -4,12 +4,11 @@ import axiosInstance from "../../config/axiosIns";
 import toast from "react-hot-toast";
 const initialState={
     isLoggedIn:localStorage.getItem('isLoggedIn') || false,
-    data: localStorage.getItem('data') ||'',
+    data: JSON.parse(localStorage.getItem("data")) ||'',
 }
 
 export const createAccount=createAsyncThunk('/auth/signup',async (data)=>{
     try {
-        console.log(data);
         const response=axiosInstance.post('user/register',data);
         toast.promise(response,{
             loading:"wait for creating your account",
@@ -79,7 +78,6 @@ export const verifyEmail=createAsyncThunk('/auth/email/verify',async ({userId,un
 // reset password
 export const resetPassword=createAsyncThunk('auth/reset',async ({email})=>{
     try {
-        console.log(email)
         const response=axiosInstance.post('user/reset/password',{email})
         toast.promise(response,{
             loading:"Wait for processing",

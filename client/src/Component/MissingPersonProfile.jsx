@@ -9,6 +9,7 @@ import CaseShareWithSocial from "../ShareHandle/CaseShareWithSocial";
 import { io } from "socket.io-client";
 // import toast from "react-hot-toast";
 import CommentSection from "./CommentSection";
+import GeoLocationMap from "../GeoLocationMap";
 // const SOCKET_URL =
 //   process.env.NODE_ENV === "development"
 //     ? "http://localhost:3000"
@@ -156,6 +157,7 @@ const MissingPersonProfile = () => {
         {/* Social Media Share Section */}
         {_id ? <CaseShareWithSocial caseData={complainData} /> : null}
       {_id ? <CommentSection caseId={complainData._id} /> : null}
+      <GeoLocationMap/>
 
       </div>
 
