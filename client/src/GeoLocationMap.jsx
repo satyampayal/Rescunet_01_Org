@@ -9,6 +9,8 @@ const center = { lat: 28.7041, lng: 77.1025 }; // Default to Delhi, India
 
 const GeoLocationMap = () => {
   const dispatch = useDispatch();
+  const VITE_GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+  console.log(VITE_GOOGLE_MAPS_API_KEY)
 //   const { nearbyCases } = useSelector((state) => state.case);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
@@ -26,7 +28,7 @@ const GeoLocationMap = () => {
   };
 
   return (
-    <LoadScript googleMapsApiKey={"AIzaSyAWvNtXrbCR8nntM3jHLmi-woX0keuFMzk"}>
+    <LoadScript googleMapsApiKey={VITE_GOOGLE_MAPS_API_KEY}>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}

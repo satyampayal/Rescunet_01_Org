@@ -155,8 +155,8 @@ const MissingPersonProfile = () => {
         </div>
 
         {/* Social Media Share Section */}
-        {_id ? <CaseShareWithSocial caseData={complainData} /> : null}
-      {_id ? <CommentSection caseId={complainData._id} /> : null}
+        {complainId ? <CaseShareWithSocial caseData={complainData} /> : null}
+      {complainId ? <CommentSection caseId={complainId} /> : null}
       <GeoLocationMap/>
 
       </div>
