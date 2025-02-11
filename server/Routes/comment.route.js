@@ -4,9 +4,9 @@ import isLoggedIn from "../middleware/auth.middleware.js";
 
 const commentRoute=Router();
 
-commentRoute.post('/add/:caseId/:userId',isLoggedIn,addComment)
+commentRoute.post('/add/:caseId/:userId',addComment)
 commentRoute.get('/get/:caseId',getCommentsOfCase)
-commentRoute.put('/edit/:caseId/:commentId/:userId',isLoggedIn,editComment)
-commentRoute.delete('/delete/:caseId/:commentId/:userId',isLoggedIn,deleteComment)
+commentRoute.put('/edit/:caseId/:commentId/:userId',editComment)
+commentRoute.delete('/delete/:caseId/:commentId/:userId',deleteComment)
 
 export default commentRoute;

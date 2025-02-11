@@ -104,7 +104,7 @@ const CommentSection = ({ caseId }) => {
                                 {editMode === comment._id ? (
                                     <button className="text-blue-500 text-sm" onClick={() => handleEdit(comment._id)}>Save</button>
                                 ) : (
-                                   deleteLoading?'load': <FaEdit className="text-blue-500 cursor-pointer" onClick={() => { setEditMode(comment._id); setCommentText(comment.comment); }} />
+                                    <FaEdit className="text-blue-500 cursor-pointer" onClick={() => { setEditMode(comment._id); setCommentText(comment.comment); }} />
                                 )}
                                 <FaTrash className="text-red-500 cursor-pointer" onClick={() => handleDelete(comment._id)} />
                             </div>
