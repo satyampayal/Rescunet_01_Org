@@ -85,7 +85,6 @@ const MissingPersonProfile = () => {
     height,
     images = [],
     otherEmail,
-    _id
   } = complainData;
 
   return (
