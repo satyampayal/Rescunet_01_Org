@@ -9,6 +9,7 @@ import ListsOfComplains from "./ListsOfComplains";
 import { Outlet } from "react-router-dom";
 import SearchBar from "./SearchBar";
 import Footer from "./Footer";
+import GeoLocationMap from "../GeoLocationMap";
 const HomePage = () => {
     const dispatch=useDispatch();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -203,6 +204,7 @@ const HomePage = () => {
             </section>
             <Outlet/>
             {/* <ListsOfComplains/> */}
+            <GeoLocationMap/>
             <Footer/>
 
         </div>

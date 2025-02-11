@@ -6,7 +6,6 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import LoginForm from './Component/User/LoginForm';
 import HomePage from './Component/HomePage';
 import MyProfile from './Component/User/MyProfile';
-import AddCase from './Component/Complains/AddCase';
 import LatestCase from './Component/Complains/LatestCase';
 import {  useSelector } from 'react-redux';
 import MyCases from './Component/User/MyCases';

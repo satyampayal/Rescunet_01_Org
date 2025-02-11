@@ -17,7 +17,7 @@ const CommentSection = ({ caseId }) => {
     const [editMode, setEditMode] = useState(null);
     const [replyMode, setReplyMode] = useState(null);
     const [replyText, setReplyText] = useState("");
-    const [deleteLoading,setDeleteLoading]=useState(false)
+    const [deleteLoading, setDeleteLoading] = useState(false)
     useEffect(() => {
         if (caseId) {
             dispatch(getCommentsOfCase({ caseId }));
@@ -39,7 +39,7 @@ const CommentSection = ({ caseId }) => {
             return;
         }
         try {
-            const response = await dispatch(postComment({ caseId, comment: commentText,userId }));
+            const response = await dispatch(postComment({ caseId, comment: commentText, userId }));
             console.log("Response of Add Coment")
             console.log(response)
             if (response?.payload?.data?.success) {
@@ -57,19 +57,20 @@ const CommentSection = ({ caseId }) => {
 
     const handleEdit = async (commentId) => {
         if (!commentText.trim()) return;
-        await dispatch(editComment({ commentId, comment: commentText, caseId ,userId}));
+        await dispatch(editComment({ commentId, comment: commentText, caseId, userId }));
         setEditMode(null);
         toast.success("Comment updated!");
     };
 
     const handleDelete = async (commentId) => {
-       const response= await dispatch(deleteComment({ commentId, caseId ,userId}));
-       console.log(response);
-       setDeleteLoading(true);
-       if(response?.payload?.data?.success){
-        setDeleteLoading(false);
+        const response = await dispatch(deleteComment({ commentId, caseId, userId }));
+        console.log(response);
+        setDeleteLoading(true);
+        if (response?.payload?.data?.success) {
+            setDeleteLoading(false);
 
-        toast.success("Comment deleted!");}
+            toast.success("Comment deleted!");
+        }
 
     };
 
@@ -83,7 +84,10 @@ const CommentSection = ({ caseId }) => {
     return (
         <div className="bg-white shadow-md rounded-lg p-4 w-full max-w-2xl mx-auto">
             <h2 className="text-xl font-semibold mb-3">Comments</h2>
-            {loading && <p className="text-gray-500">Loading comments...</p>}
+            {loading && <div className="flex justify-center items-center  ">
+                <div className="w-8 h-8 border-4 border-blue-500 border-solid rounded-full border-t-transparent animate-spin"></div>
+            </div>
+            }
             {!commentList?.length && <p className="text-gray-500">Be the first to comment!</p>}
 
             <div className="space-y-3">
@@ -106,6 +110,7 @@ const CommentSection = ({ caseId }) => {
                                 ) : (
                                     <FaEdit className="text-blue-500 cursor-pointer" onClick={() => { setEditMode(comment._id); setCommentText(comment.comment); }} />
                                 )}
+
                                 <FaTrash className="text-red-500 cursor-pointer" onClick={() => handleDelete(comment._id)} />
                             </div>
                         )}
