@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
 const isLoggedIn=async (req,res,next)=>{
     const {token}=req.cookies;
-    // console.log(token)
+    console.log(token)
     if(!token){
-     return next(res.json({
+     return next(res.status(400).json({
+        success:false,
         message:"First logged In"
      }))
     }

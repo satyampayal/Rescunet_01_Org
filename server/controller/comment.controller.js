@@ -47,7 +47,7 @@ const getCommentsOfCase=async (req,res)=>{
 
      }
 
-     const getComments=await Comment.find({caseId}).populate("userId" )
+     const getComments=await (await Comment.find({caseId}).populate("userId" )).reverse()
      if(!getComments){
         return res.status(500).json({success:false,message:"Comment not get ,try again  "})
         

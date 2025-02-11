@@ -4,6 +4,7 @@ import axiosInstance from "../../config/axiosIns"
 let initialState={
     commentList:[],
     loading:false,
+    message:'',
 }
 
 
@@ -55,9 +56,12 @@ const commentSlice=createSlice({
             state.loading=true;
         })
         builder.addCase(postComment.fulfilled,(state,action)=>{
-            state.commentList.push(action?.payload?.data?.data)
+            state.commentList.shift (action?.payload?.data?.data)
             state.loading=false;
             console.log(action)
+        })
+        builder.addCase(postComment.rejected,(state,action)=>{
+            state.message="Not add comment try again"
         })
         builder.addCase(getCommentsOfCase.pending,(state,action)=>{
             state.loading=true;

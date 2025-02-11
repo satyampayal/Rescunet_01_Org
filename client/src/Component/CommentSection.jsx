@@ -11,13 +11,12 @@ const socket = io(SOCKET_URL); // Connect to backend
 const CommentSection = ({ caseId }) => {
     const dispatch = useDispatch();
     const { isLoggedIn, data } = useSelector((state) => state.auth);
-    const userId=data._id
-    const { commentList, loading } = useSelector((state) => state?.comment || {});
+    const userId = data._id
+    const { commentList, loading, message } = useSelector((state) => state?.comment || {});
     const [commentText, setCommentText] = useState("");
     const [editMode, setEditMode] = useState(null);
     const [replyMode, setReplyMode] = useState(null);
     const [replyText, setReplyText] = useState("");
-
     useEffect(() => {
         if (caseId) {
             dispatch(getCommentsOfCase({ caseId }));
@@ -39,10 +38,17 @@ const CommentSection = ({ caseId }) => {
             return;
         }
         try {
-            await dispatch(postComment({ caseId, comment: commentText }));
-            socket.emit("new-comment", { caseId });
-            toast.success("Comment added successfully!");
-            setCommentText("");
+            const response = await dispatch(postComment({ caseId, comment: commentText }));
+            console.log("Response of Add Coment")
+            console.log(response)
+            if (response?.payload?.data?.success) {
+                socket.emit("new-comment", { caseId });
+                toast.success(response?.payload?.data?.message);
+                setCommentText("");
+            }
+            else {
+                toast.error(message)
+            }
         } catch (error) {
             toast.error("Failed to add comment!");
         }
@@ -50,13 +56,13 @@ const CommentSection = ({ caseId }) => {
 
     const handleEdit = async (commentId) => {
         if (!commentText.trim()) return;
-        await dispatch(editComment({ commentId, comment: commentText,caseId }));
+        await dispatch(editComment({ commentId, comment: commentText, caseId }));
         setEditMode(null);
         toast.success("Comment updated!");
     };
 
     const handleDelete = async (commentId) => {
-        await dispatch(deleteComment({commentId,caseId}));
+        await dispatch(deleteComment({ commentId, caseId }));
         toast.success("Comment deleted!");
     };
 
@@ -72,7 +78,7 @@ const CommentSection = ({ caseId }) => {
             <h2 className="text-xl font-semibold mb-3">Comments</h2>
             {loading && <p className="text-gray-500">Loading comments...</p>}
             {!commentList?.length && <p className="text-gray-500">Be the first to comment!</p>}
-            
+
             <div className="space-y-3">
                 {commentList?.map((comment) => (
                     <div key={comment._id} className="p-3 bg-gray-100 rounded-lg relative">
@@ -115,7 +121,7 @@ const CommentSection = ({ caseId }) => {
                     </div>
                 ))}
             </div>
-            
+
             <form onSubmit={handleSubmit} className="mt-3">
                 <textarea
                     className="w-full border p-2 rounded-lg"
