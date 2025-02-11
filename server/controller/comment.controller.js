@@ -1,10 +1,15 @@
 import { Comment } from "../model/comment.model.js";
 import Complain from "../model/complain.model.js";
+import User from '../model/userModel.js'
 
 const  addComment=async (req,res)=>{
-     const id=req.user?.id;
+     const id=req.params?.userId;
      if(!id){
         return res.status(400).json({success:false,message:"Unauthorised user "})
+     }
+     const userExists=await User.findById({_id:id})
+     if(!userExists){
+        return res.status(400).json({success:true,message:"User Not exists"})
      }
      const caseId=req.params?.caseId;
      if(!caseId){
@@ -58,9 +63,13 @@ const getCommentsOfCase=async (req,res)=>{
 
 const editComment=async (req,res)=>{
     try{
-        const id=req.user.id;
+        const id=req.params?.userId;
         if(!id){
            return res.status(400).json({success:false,message:"Unauthorised user "})
+        }
+        const userExists=await User.findById({_id:id})
+        if(!userExists){
+           return res.status(400).json({success:true,message:"User Not exists"})
         }
         const {caseId}=req.params;
         if(!caseId){
@@ -100,9 +109,13 @@ const editComment=async (req,res)=>{
 
 const deleteComment=async (req,res)=>{
     try{
-        const id=req.user.id;
+        const id=req.params?.userId;
         if(!id){
            return res.status(400).json({success:false,message:"Unauthorised user "})
+        }
+        const userExists=await User.findById({_id:id})
+        if(!userExists){
+           return res.status(400).json({success:true,message:"User Not exists"})
         }
         const {caseId}=req.params;
         if(!caseId){

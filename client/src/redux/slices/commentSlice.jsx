@@ -10,7 +10,7 @@ let initialState={
 
 export const  postComment=createAsyncThunk('/comment/add',async (data)=>{
     try{
-        const response=axiosInstance.post(`comment/add/${data.caseId}`,{"comment":data?.comment});
+        const response=axiosInstance.post(`comment/add/${data.caseId}/${data?.userId}`,{"comment":data?.comment});
         // console.log("ADD COMMENT RESPONSE-->  "+response );
         return await response;
     }catch(error){
@@ -32,7 +32,7 @@ export const getCommentsOfCase=createAsyncThunk('/comment/get',async (data)=>{
 
 export const editComment=createAsyncThunk('/comment/edit',async (data)=>{
     try{
-        const response=axiosInstance.put(`comment/edit/${data?.caseId}/${data?.commentId}`,{"comment":data?.comment})
+        const response=axiosInstance.put(`comment/edit/${data?.caseId}/${data?.commentId}/${data?.userId}`,{"comment":data?.comment})
         return await response
     }catch(error){
         console.log("Error in edit comment in the commentSlice"+error.message)
@@ -40,7 +40,7 @@ export const editComment=createAsyncThunk('/comment/edit',async (data)=>{
 })
 export const deleteComment=createAsyncThunk('/comment/delete',async (data)=>{
     try{
-        const response=axiosInstance.delete(`comment/delete/${data?.caseId}/${data?.commentId}`)
+        const response=axiosInstance.delete(`comment/delete/${data?.caseId}/${data?.commentId}/${data?.userId}`)
         return await response
     }catch(error){
         console.log("Error in edit comment in the commentSlice"+error.message)
@@ -62,6 +62,8 @@ const commentSlice=createSlice({
         })
         builder.addCase(postComment.rejected,(state,action)=>{
             state.message="Not add comment try again"
+            state.loading=false;
+
         })
         builder.addCase(getCommentsOfCase.pending,(state,action)=>{
             state.loading=true;
@@ -77,9 +79,13 @@ const commentSlice=createSlice({
                 }
                 return comment;
             })
+            state.loading=false;
+
         })
         builder.addCase(deleteComment.fulfilled,(state,action)=>{
             state.commentList=state.commentList.filter((comment)=>comment._id!==action?.payload?.data?.data?._id)
+            state.loading=false;
+
         })
     }
 })

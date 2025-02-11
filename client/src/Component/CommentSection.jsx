@@ -17,6 +17,7 @@ const CommentSection = ({ caseId }) => {
     const [editMode, setEditMode] = useState(null);
     const [replyMode, setReplyMode] = useState(null);
     const [replyText, setReplyText] = useState("");
+    const [deleteLoading,setDeleteLoading]=useState(false)
     useEffect(() => {
         if (caseId) {
             dispatch(getCommentsOfCase({ caseId }));
@@ -38,7 +39,7 @@ const CommentSection = ({ caseId }) => {
             return;
         }
         try {
-            const response = await dispatch(postComment({ caseId, comment: commentText }));
+            const response = await dispatch(postComment({ caseId, comment: commentText,userId }));
             console.log("Response of Add Coment")
             console.log(response)
             if (response?.payload?.data?.success) {
@@ -56,14 +57,20 @@ const CommentSection = ({ caseId }) => {
 
     const handleEdit = async (commentId) => {
         if (!commentText.trim()) return;
-        await dispatch(editComment({ commentId, comment: commentText, caseId }));
+        await dispatch(editComment({ commentId, comment: commentText, caseId ,userId}));
         setEditMode(null);
         toast.success("Comment updated!");
     };
 
     const handleDelete = async (commentId) => {
-        await dispatch(deleteComment({ commentId, caseId }));
-        toast.success("Comment deleted!");
+       const response= await dispatch(deleteComment({ commentId, caseId ,userId}));
+       console.log(response);
+       setDeleteLoading(true);
+       if(response?.payload?.data?.success){
+        setDeleteLoading(false);
+
+        toast.success("Comment deleted!");}
+
     };
 
     const handleReply = async (commentId) => {
@@ -99,7 +106,7 @@ const CommentSection = ({ caseId }) => {
                                 ) : (
                                     <FaEdit className="text-blue-500 cursor-pointer" onClick={() => { setEditMode(comment._id); setCommentText(comment.comment); }} />
                                 )}
-                                <FaTrash className="text-red-500 cursor-pointer" onClick={() => handleDelete(comment._id)} />
+                              {deleteLoading?'loading': <FaTrash className="text-red-500 cursor-pointer" onClick={() => handleDelete(comment._id)} />} 
                             </div>
                         )}
                         <button className="flex items-center text-sm text-blue-500 mt-2" onClick={() => setReplyMode(replyMode === comment._id ? null : comment._id)}>
