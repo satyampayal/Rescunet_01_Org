@@ -291,12 +291,15 @@ const login = async (req, res) => {
       if (checkPassword) {
         if (result.verified) {
           const token = await result.generateToken();
-          res.cookie("token",token)
+          res.cookie("token",token,{
+            httpOnly:true,
+            secure:true,
+            samesite:'None'
+          })
           return res.json({
             status: "success",
             message: "Successfully Logeed in account ",
             user: result,
-            token,
           });
         } else {
           return res.json({
