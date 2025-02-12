@@ -15,7 +15,7 @@ import MissingPersonProfile from './Component/MissingPersonProfile.jsx';
 import Footer from './Component/Footer.jsx';
 import MissingPersonForm from './Component/Complains/MissingPrsonForm.jsx';
 import ResetPassword from './Component/User/ResetPassword.jsx';
-import FaceDetection from './Component/User/FaceDetection.jsx';
+import FaceRecognition from './FaceRecognition.jsx';
 
 function App() {
   const {isLoggedIn}=useSelector((state)=>state.auth);
@@ -39,7 +39,7 @@ function App() {
       }/>
       <Route path='/user/login' element={<LoginForm/>}/>
       <Route path='/reset-password' element={<ResetPassword/>}/>
-      <Route path='face-detection' element={<FaceDetection/>} />
+      <Route path='/face-detection' element={<FaceRecognition/>} />
       
       {
         isLoggedIn &&
