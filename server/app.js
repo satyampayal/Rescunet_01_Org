@@ -9,6 +9,7 @@ import shareRouter from './Routes/share.routes.js';
 import http from "http";
 import { Server } from "socket.io";
 import commentRoute from './Routes/comment.route.js';
+import faceRoute from './Routes/face.route.js';
 
 // import path for make depolyement easy--- start
 // import path from 'path';
@@ -78,6 +79,7 @@ app.use('/user',userRoute)
 app.use('/complain',complainRoute)
 app.use('/share',shareRouter)
 app.use('/comment',commentRoute)
+app.use('/face',faceRoute)
 server.listen(3000, (e) => {
   if(e){
     console.log("Serevr not run ")

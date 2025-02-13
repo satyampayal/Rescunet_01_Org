@@ -16,6 +16,8 @@ import Footer from './Component/Footer.jsx';
 import MissingPersonForm from './Component/Complains/MissingPrsonForm.jsx';
 import ResetPassword from './Component/User/ResetPassword.jsx';
 import FaceRecognition from './FaceRecognition.jsx';
+import FaceImagesDetectionForm from './Component/FaceImagesDetectionForm.jsx';
+import AddCase from './Component/Complains/AddCase.jsx';
 
 function App() {
   const {isLoggedIn}=useSelector((state)=>state.auth);
@@ -45,7 +47,8 @@ function App() {
         isLoggedIn &&
         <Route path='/my' element={<MyProfile/>}>
         <Route index  element={<LatestCase/>}/>
-        <Route  path='addcase' element={<MissingPersonForm/>}/>
+        {/* <Route  path='addcase' element={<MissingPersonForm/>}/> */}
+        <Route  path='addcase' element={<AddCase/>}/>
         <Route index path='main' element={<LatestCase/>}/>
         <Route index path='mycases' element={<MyCases/>}/>
         
