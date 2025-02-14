@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { searchComplain } from "../redux/slices/complianSlices";
 import { Link } from "react-router-dom";
+import FaceScanner from "../FaceScanner";
 
 const SearchBar = () => {
     const { searchComplainList,loadList } = useSelector((state) => state.complain);
@@ -44,6 +45,7 @@ const SearchBar = () => {
                     </svg>
                 </div>
             </div>
+            <FaceScanner/>
 
             {/* Search Results */}
             {

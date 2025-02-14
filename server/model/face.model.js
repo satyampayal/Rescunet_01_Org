@@ -9,6 +9,7 @@ const faceSchema=new mongoose.Schema({
     //     required: true,
     //   },
     faceDescriptor:{type:[Number]},
+    detections:[],
     createdAt: { type: Date, default: Date.now }
 })
 

@@ -5,7 +5,6 @@ const FaceRecognition = () => {
   const imageRef = useRef(null);
   const canvasRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const loadModels = async () => {
         const MODEL_URL = "http://localhost:5173"+ "/models"
@@ -38,6 +37,8 @@ const FaceRecognition = () => {
     }
     if(detections){
         console.log(detections)
+       
+
     }
 
     // Draw detection on canvas
@@ -47,15 +48,9 @@ const FaceRecognition = () => {
     const resizedDetections = faceapi.resizeResults(detections, displaySize);
     faceapi.draw.drawDetections(canvas, resizedDetections);
 
-    // Send face descriptor to backend for matching
-//     fetch("/api/match-face", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ descriptor: detections.descriptor }),
-//     })
-//     .then((res) => res.json())
-//     .then((data) => console.log("Match result:", data));
   };
+ 
+
 
   return (
     <div>

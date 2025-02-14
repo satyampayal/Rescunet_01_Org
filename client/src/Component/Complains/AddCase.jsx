@@ -46,6 +46,7 @@ const AddCase = () => {
   const [isLoadingModels, setIsLoadingModels] = useState(true);
   const [error, setError] = useState("");  // Store error messages
   const [faceDescriptors, setFaceDescriptors] = useState([]);  // Store detected face data
+  const [detectionsList,setDetectionList]=useState([]);//for tasting purpose
 
   // Load Face API models
   useEffect(() => {
@@ -66,6 +67,7 @@ const AddCase = () => {
 
   const detectFaces = async () => {
     let descriptors = [];
+    let faceDetectionList=[];
     
     for (let i = 0; i < previews.length; i++) {
       const img = new Image();
@@ -80,13 +82,14 @@ const AddCase = () => {
           if (!detection) {
             setError(`❌ No face detected in Image ${i + 1}. Please upload a clear face image.`);
           } else {
+            faceDetectionList.push(detection);
             descriptors.push(detection.descriptor);
           }
           resolve();
         };
       });
     }
-
+     setDetectionList(faceDetectionList);//testing 
     setFaceDescriptors(descriptors);
 
     // Ensure minimum 2 images are uploaded
@@ -147,6 +150,7 @@ const AddCase = () => {
     });
   };
 
+  console.log(detectionsList)
   // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -155,56 +159,55 @@ const AddCase = () => {
       console.log("❌ Form submission blocked due to errors.");
       return;
     }
-    const response=await  dispatch(postFaceData({descriptors:faceDescriptors,complainId:"67ae2db2c7d50e5ed0d22234"}))
-    console.log(response)
+    
 
-    // const personFormData = new FormData();
-    // for (const [key, value] of Object.entries(formData)) {
-    //   personFormData.append(key, value);
-    // }
-    // images.forEach((image) => {
-    //   personFormData.append("images", image);
-    // });
+    const personFormData = new FormData();
+    for (const [key, value] of Object.entries(formData)) {
+      personFormData.append(key, value);
+    }
+    images.forEach((image) => {
+      personFormData.append("images", image);
+    });
 
-    // const response = await dispatch(registerComplain(personFormData));
-    // console.log(response);
+    const response = await dispatch(registerComplain(personFormData));
+    console.log(response);
 
-    // if (response?.payload?.data?.status) {
-    //   setFormData({
-    //     firstName: "",
-    //     lastName: "",
-    //     fatherName: "",
-    //     age: "",
-    //     contactAddress: "",
-    //     gender: "",
-    //     languageKnown: "",
-    //     isStudent: false,
-    //     schoolName: "",
-    //     collegeName: "",
-    //     placesOfRegularVisit: "",
-    //     Nationality: "",
-    //     missingSince: "",
-    //     height: "",
-    //     hairColor: "",
-    //     built: "",
-    //     face: "",
-    //     identificationMarks: "",
-    //     health: "",
-    //     meantalHealth: "",
-    //     reportFill: false,
-    //     reportNo: "",
-    //     stationName: "",
-    //     dateAndTime: "",
-    //     gdeNo: "",
-    //     lastSeenwithWhomeAndbyWhome: "",
-    //     apparentCauseofLeaving: "",
-    //     dressAtTimeOfLeaving: "",
-    //     otherEmail: "",
-    //   });
-    //   // now send the faceDescriptors features 
-    //   await  dispatch(postFaceData({descriptors:faceDescriptors,complainId:"67ae2db2c7d50e5ed0d22234"}))
-    //   navigate("/my");
-    // }
+    if (response?.payload?.data?.status) {
+      setFormData({
+        firstName: "",
+        lastName: "",
+        fatherName: "",
+        age: "",
+        contactAddress: "",
+        gender: "",
+        languageKnown: "",
+        isStudent: false,
+        schoolName: "",
+        collegeName: "",
+        placesOfRegularVisit: "",
+        Nationality: "",
+        missingSince: "",
+        height: "",
+        hairColor: "",
+        built: "",
+        face: "",
+        identificationMarks: "",
+        health: "",
+        meantalHealth: "",
+        reportFill: false,
+        reportNo: "",
+        stationName: "",
+        dateAndTime: "",
+        gdeNo: "",
+        lastSeenwithWhomeAndbyWhome: "",
+        apparentCauseofLeaving: "",
+        dressAtTimeOfLeaving: "",
+        otherEmail: "",
+      });
+      // now send the faceDescriptors features 
+      await  dispatch(postFaceData({detections:detectionsList,complainId:response?.payload?.data?.complian?._id}))
+      navigate("/my");
+    }
   };
   const fields = [
     { label: "First Name", name: "firstName", type: "text" },

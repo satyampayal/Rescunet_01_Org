@@ -25,11 +25,26 @@ export const postFaceData=createAsyncThunk('/face/post',(data)=>{
 
 })
 
+export const getAllface=createAsyncThunk('/face/get',async ()=>{
+  try {
+    const response=await axiosInstance.get('face/get');
+    console.log(response)
+    return await response;
+  } catch (error) {
+     console.log("Error with get all faces");
+     console.log(error.message);
+  }
+})
+
 const faceSlice=createSlice({
   name:'face',
   initialState,
   reducers:{},
   extraReducers:(builder)=>{
+    builder.addCase(getAllface.fulfilled,(state,action)=>{
+      console.log(action)
+      state.faceList=action?.payload?.data?.data;
+    })
 
   }
 })
