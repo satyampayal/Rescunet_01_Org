@@ -7,6 +7,7 @@ const MyCases = () => {
     const {myComplaints,loadList}=useSelector((state)=>state.complain)
     const dispatch=useDispatch();
     const [deleteTarget, setDeleteTarget] = useState(null);
+    const [myComplaintsList,setMyComplaintsList]=useState(myComplaints);
  
   useEffect(()=>{
     const myComplaints= async ()=>{
@@ -47,7 +48,7 @@ const MyCases = () => {
           <div className="w-8 h-8 border-4 border-blue-500 border-solid rounded-full border-t-transparent animate-spin"></div>
         </div>
       }
-      {myComplaints?  myComplaints?.map((person, index) => (
+      {myComplaintsList?  myComplaintsList?.map((person, index) => (
         <div
           key={index}
           className="relative border rounded-lg shadow-lg overflow-hidden group"
